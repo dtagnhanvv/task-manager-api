@@ -1,0 +1,27 @@
+Biddy\Entity\Core\ProductView:
+    type: entity
+    table: core_product_view
+    repositoryClass: Biddy\Repository\Core\ProductViewRepository
+    gedmo:
+        soft_deleteable:
+            field_name: deletedAt
+            time_aware: false
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        createdDate:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        deletedAt:
+            type: date
+            nullable: true
+    manyToOne:
+        viewer:
+            targetEntity: Biddy\Bundle\UserSystem\AccountBundle\Entity\User
+        product:
+            targetEntity: Biddy\Entity\Core\Product

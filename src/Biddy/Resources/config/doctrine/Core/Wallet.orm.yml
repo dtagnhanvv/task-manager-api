@@ -1,0 +1,57 @@
+Biddy\Entity\Core\Wallet:
+    type: entity
+    table: core_wallet
+    repositoryClass: Biddy\Repository\Core\WalletRepository
+    gedmo:
+        soft_deleteable:
+            field_name: deletedAt
+            time_aware: false
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        createdDate:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        deletedAt:
+            type: date
+            nullable: true
+        type:
+            type: text
+            nullable: true
+        name:
+            type: text
+            nullable: true
+        currency:
+            type: text
+            nullable: true
+        validFrom:
+            type: date
+            nullable: true
+        expiredAt:
+            type: date
+            nullable: true
+        credit:
+            type: float
+            options:
+                default: 1
+            nullable: true
+        previousCredit:
+            type: float
+            options:
+                default: 1
+            nullable: true
+    manyToOne:
+        owner:
+            targetEntity: Biddy\Bundle\UserBundle\Entity\User
+
+    oneToMany:
+        creditTransactions:
+            targetEntity: Biddy\Entity\Core\CreditTransaction
+            cascade: ['persist', 'detach', 'remove']
+            mappedBy: wallet
+            orphanRemoval: true

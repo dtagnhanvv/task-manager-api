@@ -1,0 +1,31 @@
+server {
+    listen 80;
+
+    server_name api.biddy.test;
+    root /var/www/api.biddy.test/web;
+    index index.php index.html;
+
+    access_log /var/log/nginx/api.biddy.test.access.log;
+    error_log /var/log/nginx/api.biddy.test.error.log;
+
+    location / {
+        # try to serve file directly, fallback to rewrite
+        try_files $uri @rewriteapp;
+    }
+
+    location @rewriteapp {
+        # rewrite all to app.php
+        rewrite ^(.*)$ /app.php/$1 last;
+    }
+
+    location ~ ^/(app|app_dev|app_debug|app_test|config)\.php(/|$) {
+        # for php 5
+        # fastcgi_pass unix:/var/run/php5-fpm.sock;
+        # for php 7
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+        fastcgi_read_timeout 300;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+}

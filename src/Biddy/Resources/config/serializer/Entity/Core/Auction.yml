@@ -1,0 +1,42 @@
+Biddy\Entity\Core\Auction:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [auction.detail, auction.summary, auction.minimum]
+        startDate:
+            expose: true
+            groups: [auction.detail, auction.summary]
+        endDate:
+            expose: true
+            groups: [auction.detail, auction.summary]
+        createdDate:
+            expose: true
+            groups: [auction.detail, auction.summary]
+        minimumPrice:
+            expose: true
+            groups: [auction.detail, auction.summary, auction.minimum]
+        showBid:
+            expose: true
+            groups: [auction.detail, auction.summary, auction.minimum]
+        status:
+            expose: true
+            groups: [auction.detail, auction.summary, auction.minimum]
+        product:
+            expose: true
+            groups: [auction.detail]
+        type:
+            expose: true
+            groups: [auction.detail, auction.summary, auction.minimum]
+        objective:
+            expose: true
+            groups: [auction.detail, auction.summary, auction.minimum]
+        incrementType:
+            expose: true
+            groups: [auction.detail, auction.summary, auction.minimum]
+        incrementValue:
+            expose: true
+            groups: [auction.detail, auction.summary, auction.minimum]
+        payment:
+            expose: true
+            groups: [auction.detail, auction.summary, auction.minimum]

@@ -1,0 +1,123 @@
+services:
+    biddy.worker.manager:
+        class: Biddy\Worker\Manager
+        arguments:
+            - '@biddy.service.date_util'
+            - '@biddy.redis.app_cache'
+            - '@leezy.pheanstalk'
+            - '@biddy.worker.scheduler.concurrent_job_scheduler'
+            - '@biddy.worker.scheduler.linear_job_scheduler'
+
+    biddy.worker.scheduler.concurrent_job_scheduler:
+        class: Biddy\Worker\Core\Scheduler\ConcurrentJobScheduler
+        arguments:
+            - '@leezy.pheanstalk'
+            - "%biddy.worker.concurrent_tube_name%"
+
+    biddy.worker.scheduler.linear_job_scheduler:
+        class: Biddy\Worker\Core\Scheduler\LinearJobScheduler
+        arguments:
+            - '@leezy.pheanstalk'
+            - '@biddy.redis.app_cache'
+            - '@biddy.worker.scheduler.concurrent_job_scheduler'
+            - "%biddy.worker.process_linear_job_name%"
+            - "%biddy.worker.linear_job_priority_key_prefix%"
+            - '@biddy.worker.job_expirer'
+
+    biddy.worker.job_counter:
+        class: Biddy\Worker\Core\JobCounter
+        arguments:
+            - '@biddy.redis.app_cache'
+            - "%biddy.worker.pending_job_count_key_prefix%"
+
+    biddy.worker.job_expirer:
+        class: Biddy\Worker\Core\JobExpirer
+        arguments:
+            - '@biddy.redis.app_cache'
+            - "%biddy.worker.expire_linear_job_prefix%"
+
+    biddy.worker.job.concurrent.worker_pool:
+        class: Biddy\Worker\Core\JobWorkerPool
+        arguments:
+            -
+                - '@biddy.worker.job.concurrent.alert.process_alert_worker'
+                - '@biddy.worker.job.concurrent.auction.daily_close_auctions_worker'
+                - '@biddy.worker.job.concurrent.credit.transfer_credit_after_confirm_bill_worker'
+                - '@biddy.worker.job.concurrent.fee.pay_fee_for_new_auction_worker'
+                - '@biddy.worker.job.concurrent.fee.pay_fee_for_bill_worker'
+                - '@biddy.worker.job.concurrent.fee.return_fee_for_rejected_bill_worker'
+                - '@biddy.worker.job.concurrent.logger.credit_transaction_logger_worker'
+                - '@biddy.worker.job.concurrent.rating.calculate_seller_rating_worker'
+                - '@biddy.worker.job.concurrent.wallet.create_wallets_for_user_worker'
+
+    biddy.worker.job.concurrent.alert.process_alert_worker:
+        class: Biddy\Worker\Job\Concurrent\Alert\ProcessAlertWorker
+        arguments:
+            - '@monolog.logger'
+            - '@biddy.service.alert.process_alert'
+            - '@doctrine.orm.entity_manager'
+
+    biddy.worker.job.linear.worker_pool:
+        class: Biddy\Worker\Core\JobWorkerPool
+        arguments:
+            -
+                - '@biddy.worker.job.concurrent.rating.calculate_seller_rating_worker'
+
+    biddy.worker.job.concurrent.rating.calculate_seller_rating_worker:
+        class: Biddy\Worker\Job\Concurrent\Rating\CalculateSellerRatingWorker
+        arguments:
+            - '@monolog.logger'
+            - '@biddy_api.service.user.seller_rating_calculator'
+
+    biddy.worker.job.concurrent.logger.credit_transaction_logger_worker:
+        class: Biddy\Worker\Job\Concurrent\Logger\CreditTransactionLoggerWorker
+        arguments:
+            - '@monolog.logger'
+            - '@biddy_api.service.auditing.credit_transaction.credit_transaction_logger'
+
+    biddy.worker.job.concurrent.auction.daily_close_auctions_worker:
+        class: Biddy\Worker\Job\Concurrent\Auction\DailyCloseAuctionsWorker
+        arguments:
+           - '@monolog.logger'
+           - '@biddy.service.bidding.core.auction_closer'
+           - '@biddy.repository.auction'
+           - '@biddy.worker.manager'
+           - '%auction.batchsize%'
+
+    biddy.worker.job.concurrent.credit.transfer_credit_after_confirm_bill_worker:
+        class: Biddy\Worker\Job\Concurrent\Credit\TransferCreditAfterConfirmBillWorker
+        arguments:
+            - '@monolog.logger'
+            - '@biddy.service.bidding.core.bid_credit_manager'
+            - '@biddy.domain_manager.bill'
+
+    biddy.worker.job.concurrent.fee.pay_fee_for_new_auction_worker:
+        class: Biddy\Worker\Job\Concurrent\Fee\PayFeeForNewAuctionWorker
+        arguments:
+            - '@monolog.logger'
+            - '@biddy.service.bidding.core.bid_credit_manager'
+            - '@biddy.domain_manager.auction'
+
+    biddy.worker.job.concurrent.fee.pay_fee_for_bill_worker:
+        class: Biddy\Worker\Job\Concurrent\Fee\PayFeeForBillWorker
+        arguments:
+            - '@monolog.logger'
+            - '@biddy.service.bidding.core.bid_credit_manager'
+            - '@biddy.domain_manager.bill'
+
+    biddy.worker.job.concurrent.fee.return_fee_for_rejected_bill_worker:
+        class: Biddy\Worker\Job\Concurrent\Fee\ReturnFeeForRejectedBillWorker
+        arguments:
+            - '@monolog.logger'
+            - '@biddy.service.bidding.core.bid_credit_manager'
+            - '@biddy.domain_manager.bill'
+
+    biddy.worker.job.concurrent.wallet.create_wallets_for_user_worker:
+        class: Biddy\Worker\Job\Concurrent\Wallet\CreateWalletsForUserWorker
+        arguments:
+            - '@monolog.logger'
+            - '@biddy.domain_manager.wallet'
+            -
+                - '@biddy_user.domain_manager.account'
+                - '@biddy_user.domain_manager.sale'
+                - '@biddy_user.domain_manager.admin'

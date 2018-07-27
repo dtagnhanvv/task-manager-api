@@ -1,0 +1,9 @@
+Biddy\Entity\Product\Freelancer:
+    exclusion_policy: ALL
+    properties:
+        requirements:
+            groups: [freelancer.detail, freelancer.summary, freelancer.minimum]
+        gender:
+            groups: [freelancer.detail, freelancer.summary, freelancer.minimum]
+        ages:
+            groups: [freelancer.detail, freelancer.summary, freelancer.minimum]

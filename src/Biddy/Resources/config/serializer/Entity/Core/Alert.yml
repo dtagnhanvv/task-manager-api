@@ -1,0 +1,33 @@
+Biddy\Entity\Core\Alert:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [alert.detail, alert.summary]
+        code:
+            expose: true
+            groups: [alert.detail, alert.summary]
+        isRead:
+            expose: true
+            groups: [alert.detail, alert.summary]
+        detail:
+            expose: true
+            groups: [alert.detail, alert.summary]
+        createdDate:
+            expose: true
+            groups: [alert.detail, alert.summary]
+        type:
+            expose: true
+            groups: [alert.detail, alert.summary]
+        account:
+            expose: true
+            groups: [alert.summary]
+        isSent:
+            expose: true
+            groups: [alert.detail, alert.summary]
+        targetType:
+            expose: true
+            groups: [alert.detail, alert.summary]
+        targetId:
+            expose: true
+            groups: [alert.detail, alert.summary]

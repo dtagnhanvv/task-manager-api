@@ -1,0 +1,5 @@
+services:
+    biddy_user_system_sale.set_sale_role_listener:
+        class: Biddy\Bundle\UserSystem\SaleBundle\EventListener\SetSaleRoleListener
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }

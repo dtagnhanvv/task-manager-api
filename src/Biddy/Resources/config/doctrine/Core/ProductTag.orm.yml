@@ -1,0 +1,33 @@
+Biddy\Entity\Core\ProductTag:
+    type: entity
+    table: core_product_tag
+    repositoryClass: Biddy\Repository\Core\ProductTagRepository
+    gedmo:
+        soft_deleteable:
+            field_name: deletedAt
+            time_aware: false
+
+#    uniqueConstraints:
+#        unique_product_tag_idx:
+#            columns:
+#                - product_id
+#                - tag_id # underscore column name
+
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        deletedAt:
+            type: date
+            nullable: true
+    manyToOne:
+        product:
+            targetEntity: Biddy\Entity\Core\Product
+            inversedBy: productTags
+            #cascade: ["persist"]
+        tag:
+            targetEntity: Biddy\Entity\Core\Tag
+            inversedBy: productTags
+            cascade: ["persist"]

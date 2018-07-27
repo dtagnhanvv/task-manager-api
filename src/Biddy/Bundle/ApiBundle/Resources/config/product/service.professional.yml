@@ -1,0 +1,19 @@
+parameters:
+    # entity class
+    biddy.entity.core.professional.class: Biddy\Entity\Product\Professional
+    # form class
+    biddy.form.producte.core.professional.class: Biddy\Form\Product\ProfessionalFormType
+
+services:
+    biddy.repository.professional:
+        class: Biddy\Repository\Product\ProfessionalRepository
+        factory:
+            - '@doctrine.orm.entity_manager'
+            - 'getRepository'
+        arguments:
+            - '%biddy.entity.core.professional.class%'
+
+    biddy.form.product.professional:
+        class: '%biddy.form.producte.core.professional.class%'
+        tags:
+            - { name: form.producte, alias: biddy_form_professional }

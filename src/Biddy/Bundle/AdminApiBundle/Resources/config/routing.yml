@@ -1,0 +1,9 @@
+admin_api_user:
+    type: rest
+    resource: Biddy\Bundle\AdminApiBundle\Controller\UserController
+    name_prefix: admin_api_1_
+
+admin_api_sale:
+    type: rest
+    resource: Biddy\Bundle\AdminApiBundle\Controller\SaleController
+    name_prefix: admin_api_1_

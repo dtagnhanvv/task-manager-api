@@ -1,0 +1,18 @@
+Biddy\Entity\Core\Tag:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [tag.detail, tag.summary, tag.minimum]
+        name:
+            expose: true
+            groups: [tag.detail, tag.summary, tag.minimum]
+        type:
+            expose: true
+            groups: [tag.detail, tag.summary, tag.minimum]
+        url:
+            expose: true
+            groups: [tag.detail, tag.summary, tag.minimum]
+        createdDate:
+            expose: true
+            groups: [tag.detail, tag.summary, tag.minimum]

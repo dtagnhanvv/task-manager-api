@@ -1,0 +1,4 @@
+account_api_user:
+    type: rest
+    resource: Biddy\Bundle\UserSystem\SaleBundle\Controller\SaleController
+    name_prefix: sale_api_1_

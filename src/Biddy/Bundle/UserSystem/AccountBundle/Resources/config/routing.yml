@@ -1,0 +1,4 @@
+account_api_user:
+    type: rest
+    resource: Biddy\Bundle\UserSystem\AccountBundle\Controller\AccountController
+    name_prefix: account_api_1_

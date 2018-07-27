@@ -1,0 +1,54 @@
+Biddy\Entity\Core\Product:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [product.detail, product.summary, product.minimum]
+        subject:
+            expose: true
+            groups: [product.detail, product.summary, product.minimum]
+        summary:
+            expose: true
+            groups: [product.detail, product.summary, product.minimum]
+        detail:
+            expose: true
+            groups: [product.detail, product.summary]
+        address:
+            expose: true
+            groups: [product.detail, product.summary]
+        longitude:
+            expose: true
+            groups: [product.detail, product.summary]
+        latitude:
+            expose: true
+            groups: [product.detail, product.summary]
+        mode:
+            expose: true
+            groups: [product.detail, product.summary]
+        visibility:
+            expose: true
+            groups: [product.detail, product.summary]
+        businessSetting:
+            expose: true
+            groups: [product.detail, product.summary]
+        businessRule:
+            expose: true
+            groups: [product.detail, product.summary]
+        commentVisibility:
+            expose: true
+            groups: [product.detail, product.summary]
+        seller:
+            expose: true
+            groups: [product.detail, product.summary]
+        createdDate:
+            expose: true
+            groups: [product.detail, product.summary]
+        reactions:
+            expose: true
+            groups: [product.minimum]
+        productTags:
+            expose: true
+            groups: [product.detail]
+        rating:
+            expose: true
+            groups: [product.detail, product.summary]

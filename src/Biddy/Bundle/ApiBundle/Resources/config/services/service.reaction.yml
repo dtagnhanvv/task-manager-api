@@ -1,0 +1,62 @@
+parameters:
+    # entity class
+    biddy.entity.core.reaction.class: Biddy\Entity\Core\Reaction
+    # form class
+    biddy.form.type.core.reaction.class: Biddy\Form\Type\ReactionFormType
+
+services:
+    biddy_api.handler.reaction:
+        class: Biddy\Handler\HandlerInterface
+        factory:
+            - '@biddy.handler.handler_manager.reaction'
+            - 'getHandler'
+        arguments:
+            - '@biddy.user_role'
+
+    biddy.repository.reaction:
+        class: Biddy\Repository\Core\ReactionRepository
+        factory:
+            - '@doctrine.orm.entity_manager'
+            - 'getRepository'
+        arguments:
+            - '%biddy.entity.core.reaction.class%'
+
+    biddy.domain_manager.reaction:
+        class: Biddy\DomainManager\ReactionManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@biddy.repository.reaction'
+
+    biddy.form.type.reaction:
+        class: '%biddy.form.type.core.reaction.class%'
+        tags:
+            - { name: form.type, alias: biddy_form_reaction }
+
+    biddy.handler.handlers.reaction.abstract:
+        class: Biddy\Handler\Handlers\Core\ReactionHandlerAbstract
+        parent: biddy.handler.role_handler_abstract
+        abstract: true
+        public: false
+        arguments:
+            - '%biddy.form.type.core.reaction.class%'
+            - '@biddy.domain_manager.reaction'
+
+    biddy.handler.handlers.reaction.admin:
+        class: Biddy\Handler\Handlers\Core\Admin\ReactionHandler
+        parent: biddy.handler.handlers.reaction.abstract
+        public: false
+        arguments:
+            - '@biddy_user.domain_manager.account'
+
+    biddy.handler.handlers.reaction.account:
+        class: Biddy\Handler\Handlers\Core\Account\ReactionHandler
+        parent: biddy.handler.handlers.reaction.abstract
+        public: false
+
+    biddy.handler.handler_manager.reaction:
+        class: Biddy\Handler\HandlerManager
+        arguments:
+            - '%biddy.entity.core.reaction.class%'
+            -
+                - '@biddy.handler.handlers.reaction.admin'
+                - '@biddy.handler.handlers.reaction.account'

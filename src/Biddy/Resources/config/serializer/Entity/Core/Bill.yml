@@ -1,0 +1,29 @@
+Biddy\Entity\Core\Bill:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [bill.detail, bill.summary]
+        price:
+            expose: true
+            groups: [bill.detail, bill.summary]
+        payment:
+            expose: true
+            groups: [bill.detail, bill.summary]
+        noteForSeller:
+            expose: true
+            groups: [bill.detail, bill.summary]
+        buyer:
+            expose: true
+            groups: [bill.detail, bill.summary]
+        seller:
+            expose: true
+            groups: [bill.detail, bill.summary]
+        bid:
+            expose: true
+            groups: [bill.detail, bill.summary]
+        status:
+            expose: true
+            groups: [bill.detail, bill.summary]
+        createdDate:
+            groups: [bill.detail, bill.summary]

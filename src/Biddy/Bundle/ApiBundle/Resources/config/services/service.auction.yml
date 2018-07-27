@@ -1,0 +1,72 @@
+parameters:
+    # entity class
+    biddy.entity.core.auction.class: Biddy\Entity\Core\Auction
+    # form class
+    biddy.form.type.core.auction.class: Biddy\Form\Type\AuctionFormType
+
+services:
+    biddy_api.handler.auction:
+        class: Biddy\Handler\HandlerInterface
+        factory:
+            - '@biddy.handler.handler_manager.auction'
+            - 'getHandler'
+        arguments:
+            - '@biddy.user_role'
+
+    biddy.repository.auction:
+        class: Biddy\Repository\Core\AuctionRepository
+        factory:
+            - '@doctrine.orm.entity_manager'
+            - 'getRepository'
+        arguments:
+            - '%biddy.entity.core.auction.class%'
+
+    biddy.domain_manager.auction:
+        class: Biddy\DomainManager\AuctionManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@biddy.repository.auction'
+
+    biddy.form.type.auction:
+        class: '%biddy.form.type.core.auction.class%'
+        arguments:
+            - '%auction.payment_not_supported%'
+        tags:
+            - { name: form.type, alias: biddy_form_auction }
+
+    biddy.handler.handlers.auction.abstract:
+        class: Biddy\Handler\Handlers\Core\AuctionHandlerAbstract
+        parent: biddy.handler.role_handler_abstract
+        abstract: true
+        public: false
+        arguments:
+            - '%biddy.form.type.core.auction.class%'
+            - '@biddy.domain_manager.auction'
+
+    biddy.handler.handlers.auction.admin:
+        class: Biddy\Handler\Handlers\Core\Admin\AuctionHandler
+        parent: biddy.handler.handlers.auction.abstract
+        public: false
+        arguments:
+            - '@biddy_user.domain_manager.account'
+
+    biddy.handler.handlers.auction.sale:
+        class: Biddy\Handler\Handlers\Core\Sale\AuctionHandler
+        parent: biddy.handler.handlers.auction.abstract
+        public: false
+        arguments:
+            - '@biddy_user.domain_manager.account'
+
+    biddy.handler.handlers.auction.account:
+        class: Biddy\Handler\Handlers\Core\Account\AuctionHandler
+        parent: biddy.handler.handlers.auction.abstract
+        public: false
+
+    biddy.handler.handler_manager.auction:
+        class: Biddy\Handler\HandlerManager
+        arguments:
+            - '%biddy.entity.core.auction.class%'
+            -
+                - '@biddy.handler.handlers.auction.admin'
+                - '@biddy.handler.handlers.auction.sale'
+                - '@biddy.handler.handlers.auction.account'

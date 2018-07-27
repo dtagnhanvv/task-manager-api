@@ -1,0 +1,47 @@
+Biddy\Bundle\UserBundle\Entity\User:
+    type: entity
+    table: core_user
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    attributeOverride:
+        email:
+            nullable: true
+        emailCanonical:
+            nullable: true
+            unique: false
+    fields:
+        joinDate:
+            type: date
+            gedmo:
+                timestampable:
+                    on: create
+        testAccount:
+            type: boolean
+            nullable: true
+            options:
+                default: false
+        profileImageUrl:
+            type: string
+            nullable: true
+        userPreferences:
+            type: json_array
+            nullable: true
+    inheritanceType: JOINED
+
+    discriminatorColumn:
+        name: type
+        type: string
+    discriminatorMap:
+        admin: Biddy\Bundle\UserSystem\AdminBundle\Entity\User
+        account: Biddy\Bundle\UserSystem\AccountBundle\Entity\User
+        sale: Biddy\Bundle\UserSystem\SaleBundle\Entity\User
+
+    oneToMany:
+        wallets:
+            targetEntity: Biddy\Entity\Core\Wallet
+            cascade: ['persist', 'detach', 'remove']
+            mappedBy: owner
+            orphanRemoval: true

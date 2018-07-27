@@ -1,0 +1,20 @@
+Biddy\Entity\Core\ProductRating:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [product_rating.detail, product_rating.summary, product_rating.minimum]
+        createdDate:
+            groups: [product_rating.detail, product_rating.summary]
+        rateValue:
+            expose: true
+            groups: [product_rating.detail, product_rating.summary, product_rating.minimum]
+        rateMessage:
+            expose: true
+            groups: [product_rating.detail, product_rating.summary, product_rating.minimum]
+        reviewer:
+            expose: true
+            groups: [product_rating.detail, product_rating.summary, product_rating.minimum]
+        product:
+            expose: true
+            groups: [product_rating.detail, product_rating.summary, product_rating.minimum]

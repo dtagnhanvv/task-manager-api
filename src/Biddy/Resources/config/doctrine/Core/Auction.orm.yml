@@ -1,0 +1,75 @@
+Biddy\Entity\Core\Auction:
+    type: entity
+    table: core_auction
+    repositoryClass: Biddy\Repository\Core\AuctionRepository
+    gedmo:
+        soft_deleteable:
+            field_name: deletedAt
+            time_aware: false
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        createdDate:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        deletedAt:
+            type: date
+            nullable: true
+        startDate:
+            type: string
+            length: 255
+            nullable: true
+        endDate:
+            type: string
+            length: 255
+            nullable: true
+        minimumPrice:
+            type: float
+            options:
+                default: 1
+            nullable: true
+        showBid:
+            type: boolean
+            option:
+                default: true
+            nullable: true
+        status:
+            type: string
+            length: 255
+            nullable: true
+        type:
+            type: string
+            length: 255
+            nullable: true
+        objective:
+            type: string
+            length: 255
+            nullable: true
+        incrementType:
+            type: string
+            length: 255
+            nullable: true
+        incrementValue:
+            type: string
+            length: 255
+            nullable: true
+        payment:
+            type: string
+            length: 255
+            nullable: true
+    manyToOne:
+        product:
+            targetEntity: Biddy\Entity\Core\Product
+            inversedBy: auctions
+
+    oneToMany:
+        bids:
+            targetEntity: Biddy\Entity\Core\Bid
+            cascade: ['persist', 'detach', 'remove']
+            mappedBy: auction
+            orphanRemoval: true

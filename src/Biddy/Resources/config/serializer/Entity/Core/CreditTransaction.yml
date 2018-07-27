@@ -1,0 +1,29 @@
+Biddy\Entity\Core\CreditTransaction:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [credit_transaction.detail, credit_transaction.summary, credit_transaction.minimum]
+        createdDate:
+            groups: [credit_transaction.detail, credit_transaction.summary]
+        amount:
+            expose: true
+            groups: [credit_transaction.detail, credit_transaction.summary, credit_transaction.minimum]
+        type:
+            expose: true
+            groups: [credit_transaction.detail, credit_transaction.summary, credit_transaction.minimum]
+        detail:
+            expose: true
+            groups: [credit_transaction.detail, credit_transaction.summary, credit_transaction.minimum]
+        targetWalletCreditBeforeTransaction:
+            expose: true
+            groups: [credit_transaction.detail, credit_transaction.summary, credit_transaction.minimum]
+        fromWalletCreditBeforeTransaction:
+            expose: true
+            groups: [credit_transaction.detail, credit_transaction.summary, credit_transaction.minimum]
+        fromWallet:
+            expose: true
+            groups: [credit_transaction.detail, credit_transaction.summary, credit_transaction.minimum]
+        targetWallet:
+            expose: true
+            groups: [credit_transaction.detail, credit_transaction.summary, credit_transaction.minimum]

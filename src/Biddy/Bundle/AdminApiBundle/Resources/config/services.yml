@@ -1,0 +1,54 @@
+parameters:
+    biddy_admin_api.form.type.user.class: Biddy\Bundle\AdminApiBundle\Form\Type\UserFormType
+    biddy_admin_api.form.type.sale.class: Biddy\Bundle\AdminApiBundle\Form\Type\SaleFormType
+
+services:
+    # main public services
+
+    biddy_admin_api.handler.user:
+        class: Biddy\Bundle\AdminApiBundle\Handler\UserHandler
+        parent: biddy.handler.handler_abstract
+        public: true
+        arguments:
+            - '@form.factory'
+            - '%biddy_admin_api.form.type.user.class%'
+            - '@biddy_user.domain_manager.account'
+
+    # forms
+
+    biddy_admin_api.form.type.user:
+        class: Biddy\Bundle\AdminApiBundle\Form\Type\UserFormType
+        arguments:
+            - "@=service('security.helper').getToken().getUser()"
+            - "@biddy_user.domain_manager.account"
+            - "%user_register_duplicate_email%"
+            - "%user_register_duplicate_username%"
+            - "%user_register_duplicate_phone%"
+        tags:
+            - { name: form.type, alias: biddy_form_admin_api_user }
+
+    biddy_admin_api.event_listener.set_account_uuid_listener:
+        class: Biddy\Bundle\AdminApiBundle\EventListener\SetAccountUuidListener
+        tags:
+            - { name: doctrine.event_listener, event: prePersist}
+
+    biddy_admin_api.handler.sale:
+        class: Biddy\Bundle\AdminApiBundle\Handler\SaleHandler
+        parent: biddy.handler.handler_abstract
+        public: true
+        arguments:
+            - '@form.factory'
+            - '%biddy_admin_api.form.type.sale.class%'
+            - '@biddy_user.domain_manager.sale'
+
+    biddy_admin_api.form.type.sale:
+        class: Biddy\Bundle\AdminApiBundle\Form\Type\SaleFormType
+        arguments:
+            - "@=service('security.helper').getToken().getUser()"
+        tags:
+            - { name: form.type, alias: biddy_form_admin_api_user }
+
+    biddy_admin_api.event_listener.set_sale_uuid_listener:
+        class: Biddy\Bundle\AdminApiBundle\EventListener\SetSaleUuidListener
+        tags:
+            - { name: doctrine.event_listener, event: prePersist}

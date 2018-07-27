@@ -1,0 +1,11 @@
+Biddy\Entity\Product\Professional:
+    exclusion_policy: ALL
+    properties:
+        requirements:
+            groups: [professional.detail, professional.summary, professional.minimum]
+        gender:
+            groups: [professional.detail, professional.summary, professional.minimum]
+        ages:
+            groups: [professional.detail, professional.summary, professional.minimum]
+        skills:
+            groups: [professional.detail, professional.summary, professional.minimum]

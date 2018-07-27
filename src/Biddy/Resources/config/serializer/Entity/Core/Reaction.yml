@@ -1,0 +1,21 @@
+Biddy\Entity\Core\Reaction:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [reaction.detail, reaction.summary, reaction.minimum]
+        createdDate:
+            expose: true
+            groups: [reaction.detail, reaction.summary, reaction.minimum]
+        emotion:
+            expose: true
+            groups: [reaction.detail, reaction.summary, reaction.minimum]
+        product:
+            expose: true
+            groups: [reaction.detail, reaction.summary]
+        comment:
+            expose: true
+            groups: [reaction.detail, reaction.summary]
+        viewer:
+            expose: true
+            groups: [reaction.detail, reaction.summary, reaction.minimum]

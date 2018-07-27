@@ -1,0 +1,24 @@
+biddy_admin_api:
+    resource: "@BiddyAdminApiBundle/Resources/config/routing.yml"
+    type:   rest
+    prefix: /api/admin/v1
+
+biddy_sale_api:
+    resource: "@BiddySaleApiBundle/Resources/config/routing.yml"
+    type:   rest
+    prefix: /api/sale/v1
+
+biddy_account_api:
+    resource: "@BiddyUserSystemAccountBundle/Resources/config/routing.yml"
+    type:   rest
+    prefix: /api/account/v1
+
+biddy_api:
+    resource: "@BiddyApiBundle/Resources/config/routing.yml"
+    type:   rest
+    prefix: /api/v1
+
+biddy_public:
+    resource: "@BiddyPublicBundle/Resources/config/routing.yml"
+    type:     rest
+    prefix:   /api/public/v1

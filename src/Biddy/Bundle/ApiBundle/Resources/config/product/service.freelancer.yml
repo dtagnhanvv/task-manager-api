@@ -1,0 +1,19 @@
+parameters:
+    # entity class
+    biddy.entity.core.freelancer.class: Biddy\Entity\Product\Freelancer
+    # form class
+    biddy.form.product.core.freelancer.class: Biddy\Form\Product\FreelancerFormType
+
+services:
+    biddy.repository.freelancer:
+        class: Biddy\Repository\Product\FreelancerRepository
+        factory:
+            - '@doctrine.orm.entity_manager'
+            - 'getRepository'
+        arguments:
+            - '%biddy.entity.core.freelancer.class%'
+
+    biddy.form.product.freelancer:
+        class: '%biddy.form.product.core.freelancer.class%'
+        tags:
+            - { name: form.product, alias: biddy_form_freelancer }

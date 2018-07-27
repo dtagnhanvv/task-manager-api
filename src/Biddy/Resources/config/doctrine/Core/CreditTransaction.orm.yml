@@ -1,0 +1,48 @@
+Biddy\Entity\Core\CreditTransaction:
+    type: entity
+    table: core_credit_transaction
+    repositoryClass: Biddy\Repository\Core\CreditTransactionRepository
+    gedmo:
+        soft_deleteable:
+            field_name: deletedAt
+            time_aware: false
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        createdDate:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        deletedAt:
+            type: date
+            nullable: true
+        amount:
+            type: float
+            options:
+                default: 1
+            nullable: true
+        type:
+            type: text
+            nullable: true
+        detail:
+            type: text
+            nullable: true
+        targetWalletCreditBeforeTransaction:
+            type: float
+            options:
+                default: 1
+            nullable: true
+        fromWalletCreditBeforeTransaction:
+            type: float
+            options:
+                default: 1
+            nullable: true
+    manyToOne:
+        fromWallet:
+            targetEntity: Biddy\Entity\Core\Wallet
+        targetWallet:
+            targetEntity: Biddy\Entity\Core\Wallet

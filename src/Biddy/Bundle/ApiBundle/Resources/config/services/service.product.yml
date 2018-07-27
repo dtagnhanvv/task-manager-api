@@ -1,0 +1,85 @@
+parameters:
+    # entity class
+    biddy.entity.core.product.class: Biddy\Entity\Core\Product
+    # form class
+    biddy.form.type.core.product.class: Biddy\Form\Type\ProductFormType
+
+services:
+    biddy_api.handler.product:
+        class: Biddy\Handler\HandlerInterface
+        factory:
+            - '@biddy.handler.handler_manager.product'
+            - 'getHandler'
+        arguments:
+            - '@biddy.user_role'
+
+    biddy.repository.product:
+        class: Biddy\Repository\Core\ProductRepository
+        factory:
+            - '@doctrine.orm.entity_manager'
+            - 'getRepository'
+        arguments:
+            - '%biddy.entity.core.product.class%'
+
+    ### For support extend products such as freelancer, professional, transport, goods, real estate, jobs...
+    ### We use same Product Controller, Product Handler, Product Manager
+    ### Only create Form and Repository and inject to Product Manager as below.
+    ### Note
+    ###        -  Form implements MultiFormInterface
+    ###        -  Repository implements MultiRepositoryInterface
+    ###        -  No need model
+
+    biddy.domain_manager.product:
+        class: Biddy\DomainManager\ProductManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            -
+                - '@biddy.repository.freelancer'
+                - '@biddy.repository.professional'
+                - '@biddy.repository.product'
+            -
+                - '@biddy.form.product.freelancer'
+                - '@biddy.form.product.professional'
+                - '@biddy.form.type.product'
+
+    biddy.form.type.product:
+        class: '%biddy.form.type.core.product.class%'
+        tags:
+            - { name: form.type, alias: biddy_form_product }
+
+    biddy.handler.handlers.product.abstract:
+        class: Biddy\Handler\Handlers\Core\ProductHandlerAbstract
+        parent: biddy.handler.role_handler_abstract
+        abstract: true
+        public: false
+        arguments:
+            - '%biddy.form.type.core.product.class%'
+            - '@biddy.domain_manager.product'
+
+    biddy.handler.handlers.product.admin:
+        class: Biddy\Handler\Handlers\Core\Admin\ProductHandler
+        parent: biddy.handler.handlers.product.abstract
+        public: false
+        arguments:
+            - '@biddy_user.domain_manager.account'
+
+    biddy.handler.handlers.product.sale:
+        class: Biddy\Handler\Handlers\Core\Sale\ProductHandler
+        parent: biddy.handler.handlers.product.abstract
+        public: false
+        arguments:
+            - '@biddy_user.domain_manager.account'
+
+    biddy.handler.handlers.product.account:
+        class: Biddy\Handler\Handlers\Core\Account\ProductHandler
+        parent: biddy.handler.handlers.product.abstract
+        public: false
+
+    biddy.handler.handler_manager.product:
+        class: Biddy\Handler\HandlerManager
+        arguments:
+            - '%biddy.entity.core.product.class%'
+            -
+                - '@biddy.handler.handlers.product.admin'
+                - '@biddy.handler.handlers.product.sale'
+                - '@biddy.handler.handlers.product.account'

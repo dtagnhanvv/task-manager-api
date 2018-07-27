@@ -1,0 +1,75 @@
+services:
+    biddy.service.alert.process_alert:
+        class: Biddy\Service\Alert\ProcessAlert
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+    biddy_api.service.user.seller_rating_calculator:
+        class: Biddy\Service\User\SellerRatingCalculator
+        arguments:
+            - '@biddy_user.domain_manager.account'
+            - '@biddy.domain_manager.product'
+    biddy_api.service.credit_transaction.credit_transaction_factory:
+        class: Biddy\Service\CreditTransaction\CreditTransactionFactory
+        arguments:
+            - '@biddy.worker.manager'
+            - '%payment.fee.credit%'
+            - '%payment.fee.offline%'
+
+    biddy_api.service.auditing.credit_transaction.credit_transaction_logger:
+        class: Biddy\Service\Auditing\CreditTransaction\CreditTransactionLogger
+        arguments:
+            - '@biddy.domain_manager.credit_transaction'
+            - '@biddy.service.csv_writer'
+            - '%credit_logging_folder_path%'
+
+    biddy.service.csv_writer:
+        class: Biddy\Service\Util\CsvWriter
+
+
+    biddy.service.bidding.automated.automated_auction_rule:
+        class: Biddy\Service\Bidding\Automated\AutomatedAuctionRule
+        arguments:
+            -
+                - '%bidding.rule.automated_by_price%'
+                - '%bidding.rule.automated_by_price%'
+            - '@biddy.repository.bid'
+
+    biddy.service.bidding.manual.manual_auction_rule:
+        class: Biddy\Service\Bidding\Manual\ManualAuctionRule
+        arguments:
+            -
+                - '%bidding.rule.manual%'
+                - '%bidding.rule.manual%'
+            - '@biddy.domain_manager.bid'
+
+    biddy.service.bidding.cancel.cancel_auction_rule:
+        class: Biddy\Service\Bidding\Cancel\CancelAuctionRule
+        arguments:
+            -
+                - '%bidding.rule.cancel%'
+
+    biddy.service.bidding.core.auction_closer:
+        class: Biddy\Service\Bidding\Core\AuctionCloser
+        arguments:
+            - '@monolog.logger'
+            - '@biddy.domain_manager.auction'
+            - '@biddy.worker.manager'
+            - '@biddy.domain_manager.bid'
+            - '@biddy.service.bidding.core.bid_status_manager'
+            -
+                - '@biddy.service.bidding.automated.automated_auction_rule'
+                - '@biddy.service.bidding.manual.manual_auction_rule'
+                - '@biddy.service.bidding.cancel.cancel_auction_rule'
+
+    biddy.service.bidding.core.bid_status_manager:
+        class: Biddy\Service\Bidding\Core\BidStatusManager
+        arguments:
+            - '@biddy.domain_manager.bid'
+
+    biddy.service.bidding.core.bid_credit_manager:
+        class: Biddy\Service\Bidding\Core\BidCreditManager
+        arguments:
+            - '@biddy_user.domain_manager.account'
+            - '@biddy_api.service.credit_transaction.credit_transaction_factory'
+            - '@biddy.domain_manager.credit_transaction'

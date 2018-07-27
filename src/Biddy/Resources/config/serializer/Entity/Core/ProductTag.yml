@@ -1,0 +1,12 @@
+Biddy\Entity\Core\ProductTag:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [product_tag.detail, product_tag.summary, product_tag.minimum]
+        product:
+            expose: true
+            groups: [product_tag.detail, product_tag.summary]
+        tag:
+            expose: true
+            groups: [product_tag.detail, product_tag.summary, product_tag.minimum]

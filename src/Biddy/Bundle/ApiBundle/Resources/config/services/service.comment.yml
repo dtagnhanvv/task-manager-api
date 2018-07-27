@@ -1,0 +1,62 @@
+parameters:
+    # entity class
+    biddy.entity.core.comment.class: Biddy\Entity\Core\Comment
+    # form class
+    biddy.form.type.core.comment.class: Biddy\Form\Type\CommentFormType
+
+services:
+    biddy_api.handler.comment:
+        class: Biddy\Handler\HandlerInterface
+        factory:
+            - '@biddy.handler.handler_manager.comment'
+            - 'getHandler'
+        arguments:
+            - '@biddy.user_role'
+
+    biddy.repository.comment:
+        class: Biddy\Repository\Core\CommentRepository
+        factory:
+            - '@doctrine.orm.entity_manager'
+            - 'getRepository'
+        arguments:
+            - '%biddy.entity.core.comment.class%'
+
+    biddy.domain_manager.comment:
+        class: Biddy\DomainManager\CommentManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@biddy.repository.comment'
+
+    biddy.form.type.comment:
+        class: '%biddy.form.type.core.comment.class%'
+        tags:
+            - { name: form.type, alias: biddy_form_comment }
+
+    biddy.handler.handlers.comment.abstract:
+        class: Biddy\Handler\Handlers\Core\CommentHandlerAbstract
+        parent: biddy.handler.role_handler_abstract
+        abstract: true
+        public: false
+        arguments:
+            - '%biddy.form.type.core.comment.class%'
+            - '@biddy.domain_manager.comment'
+
+    biddy.handler.handlers.comment.admin:
+        class: Biddy\Handler\Handlers\Core\Admin\CommentHandler
+        parent: biddy.handler.handlers.comment.abstract
+        public: false
+        arguments:
+            - '@biddy_user.domain_manager.account'
+
+    biddy.handler.handlers.comment.account:
+        class: Biddy\Handler\Handlers\Core\Account\CommentHandler
+        parent: biddy.handler.handlers.comment.abstract
+        public: false
+
+    biddy.handler.handler_manager.comment:
+        class: Biddy\Handler\HandlerManager
+        arguments:
+            - '%biddy.entity.core.comment.class%'
+            -
+                - '@biddy.handler.handlers.comment.admin'
+                - '@biddy.handler.handlers.comment.account'

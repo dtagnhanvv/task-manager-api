@@ -1,0 +1,13 @@
+
+biddy_user_system_sale_security_login:
+    path: /login
+    defaults: { _controller: "FOSUserBundle:Security:login" }
+
+biddy_user_system_sale_security_check:
+    path: /login_check
+    defaults: { _controller: "FOSUserBundle:Security:check" }
+    methods: "POST"
+
+biddy_user_system_sale_security_logout:
+    path: /logout
+    defaults: { _controller: "FOSUserBundle:Security:logout" }

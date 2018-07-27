@@ -1,0 +1,64 @@
+Biddy\Entity\Core\Comment:
+    type: entity
+    table: core_comment
+    repositoryClass: Biddy\Repository\Core\CommentRepository
+    gedmo:
+        soft_deleteable:
+            field_name: deletedAt
+            time_aware: false
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        createdDate:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        modified:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update
+        deletedAt:
+            type: date
+            nullable: true
+        content:
+            type: text
+            nullable: true
+        contentType:
+            type: text
+            nullable: true
+        estimatedHeight:
+            type: text
+            nullable: true
+        migrationStatus:
+            type: text
+            nullable: true
+        raw:
+            type: string
+            length: 255
+            nullable: true
+    manyToOne:
+        author:
+            targetEntity: Biddy\Bundle\UserSystem\AccountBundle\Entity\User
+        product:
+            targetEntity: Biddy\Entity\Core\Product
+            inversedBy: comments
+        masterComment:
+            targetEntity: Biddy\Entity\Core\Comment
+            inversedBy: childComments
+
+    oneToMany:
+        childComments:
+            targetEntity: Biddy\Entity\Core\Comment
+            cascade: ['persist', 'detach', 'remove']
+            mappedBy: masterComment
+            orphanRemoval: true
+        reactions:
+            targetEntity: Biddy\Entity\Core\Reaction
+            cascade: ['persist', 'detach', 'remove']
+            mappedBy: comment
+            orphanRemoval: true

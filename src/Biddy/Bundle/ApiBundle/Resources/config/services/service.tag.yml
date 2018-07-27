@@ -1,0 +1,62 @@
+parameters:
+    # entity class
+    biddy.entity.core.tag.class: Biddy\Entity\Core\Tag
+    # form class
+    biddy.form.type.core.tag.class: Biddy\Form\Type\TagFormType
+
+services:
+    biddy_api.handler.tag:
+        class: Biddy\Handler\HandlerInterface
+        factory:
+            - '@biddy.handler.handler_manager.tag'
+            - 'getHandler'
+        arguments:
+            - '@biddy.user_role'
+
+    biddy.repository.tag:
+        class: Biddy\Repository\Core\TagRepository
+        factory:
+            - '@doctrine.orm.entity_manager'
+            - 'getRepository'
+        arguments:
+            - '%biddy.entity.core.tag.class%'
+
+    biddy.domain_manager.tag:
+        class: Biddy\DomainManager\TagManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@biddy.repository.tag'
+
+    biddy.form.type.tag:
+        class: '%biddy.form.type.core.tag.class%'
+        tags:
+            - { name: form.type, alias: biddy_form_tag }
+
+    biddy.handler.handlers.tag.abstract:
+        class: Biddy\Handler\Handlers\Core\TagHandlerAbstract
+        parent: biddy.handler.role_handler_abstract
+        abstract: true
+        public: false
+        arguments:
+            - '%biddy.form.type.core.tag.class%'
+            - '@biddy.domain_manager.tag'
+
+    biddy.handler.handlers.tag.admin:
+        class: Biddy\Handler\Handlers\Core\Admin\TagHandler
+        parent: biddy.handler.handlers.tag.abstract
+        public: false
+        arguments:
+            - '@biddy_user.domain_manager.account'
+
+    biddy.handler.handlers.tag.account:
+        class: Biddy\Handler\Handlers\Core\Account\TagHandler
+        parent: biddy.handler.handlers.tag.abstract
+        public: false
+
+    biddy.handler.handler_manager.tag:
+        class: Biddy\Handler\HandlerManager
+        arguments:
+            - '%biddy.entity.core.tag.class%'
+            -
+                - '@biddy.handler.handlers.tag.admin'
+                - '@biddy.handler.handlers.tag.account'

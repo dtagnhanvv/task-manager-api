@@ -1,0 +1,207 @@
+services:
+
+#######  Alert listeners
+
+    biddy.event_listener.alert.profile.create_alert_for_account_change_listener:
+        class: Biddy\EventListener\Alert\Profile\CreateAlertForAccountChangeListener
+        arguments:
+            - '@biddy.worker.manager'
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postFlush }
+
+    biddy.event_listener.alert.profile.create_alert_for_sale_change_listener:
+        class: Biddy\EventListener\Alert\Profile\CreateAlertForSaleChangeListener
+        arguments:
+            - '@biddy.worker.manager'
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postFlush }
+
+    biddy.event_listener.alert.credit.create_alert_for_account_credit_change_listener:
+        class: Biddy\EventListener\Alert\Credit\CreateAlertForAccountCreditChangeListener
+        arguments:
+            - '@biddy.worker.manager'
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postFlush }
+
+    biddy.event_listener.alert.credit.create_alert_for_sale_credit_change_listener:
+        class: Biddy\EventListener\Alert\Credit\CreateAlertForSaleCreditChangeListener
+        arguments:
+            - '@biddy.worker.manager'
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postFlush }
+
+    biddy.event_listener.alert.credit.create_alert_for_credit_transaction_change_listener:
+        class: Biddy\EventListener\Alert\Credit\CreateAlertForCreditTransactionChangeListener
+        arguments:
+            - '@biddy.worker.manager'
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postFlush }
+
+    biddy.event_listener.alert.auction.create_alert_for_auction_change_listener:
+        class: Biddy\EventListener\Alert\Auction\CreateAlertForAuctionChangeListener
+        arguments:
+            - '@biddy.worker.manager'
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postFlush }
+
+    biddy.event_listener.alert.bid.create_alert_for_bid_change_listener:
+        class: Biddy\EventListener\Alert\Bid\CreateAlertForBidChangeListener
+        arguments:
+            - '@biddy.worker.manager'
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postFlush }
+
+    biddy.event_listener.alert.bill.create_alert_for_bill_change_listener:
+        class: Biddy\EventListener\Alert\Bill\CreateAlertForBillChangeListener
+        arguments:
+            - '@biddy.worker.manager'
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postFlush }
+
+    biddy.event_listener.alert.product.create_alert_for_product_change_listener:
+        class: Biddy\EventListener\Alert\Product\CreateAlertForProductChangeListener
+        arguments:
+            - '@biddy.worker.manager'
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postFlush }
+
+#######  Bidding listeners
+
+    biddy.event_listener.bidding.guarantee_bid_when_bidding_listener:
+        class: Biddy\EventListener\Bidding\GuaranteeBidWhenBiddingListener
+        arguments:
+            - '@biddy.worker.manager'
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postFlush }
+
+    biddy.event_listener.bidding.automated_bid_change_listener:
+        class: Biddy\EventListener\Bidding\AutomatedBidChangeListener
+        arguments:
+            - '@biddy.worker.manager'
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+
+    biddy.event_listener.bidding.auction_change_listener:
+        class: Biddy\EventListener\Bidding\AuctionChangeListener
+        arguments:
+            - '@biddy.worker.manager'
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postFlush }
+
+
+    biddy.event_listener.return_guarantee_bid_when_bid_change_listener:
+        class: Biddy\EventListener\Bidding\ReturnGuaranteeBidWhenBidChangeListener
+        arguments:
+            - '@biddy.worker.manager'
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postFlush }
+
+#######  Fee listeners
+
+    biddy.event_listener.fee.pay_fee_for_new_auction_listener:
+        class: Biddy\EventListener\Fee\PayFeeForNewAuctionListener
+        arguments:
+            - '@biddy.worker.manager'
+            - '%payment.fee.credit%'
+            - '%payment.fee.offline%'
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postFlush }
+
+    biddy.event_listener.fee.pay_fee_for_new_bill_listener:
+        class: Biddy\EventListener\Fee\PayFeeForNewBillListener
+        arguments:
+            - '@biddy.worker.manager'
+            - '@monolog.logger'
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postFlush }
+
+    biddy.event_listener.fee.return_fee_for_rejected_bill_listener:
+        class: Biddy\EventListener\Fee\ReturnFeeForRejectedBillListener
+        arguments:
+            - '@biddy.worker.manager'
+            - '@monolog.logger'
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postFlush }
+
+#######  Bill listeners
+
+    biddy.event_listener.transfer_credit_after_confirm_bill_listener:
+        class: Biddy\EventListener\Bill\TransferCreditAfterConfirmBillListener
+        arguments:
+            - '@biddy.worker.manager'
+            - '@monolog.logger'
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postFlush }
+
+    biddy.event_listener.transfer_credit_after_reject_bill_change_listener:
+        class: Biddy\EventListener\Bill\TransferCreditAfterRejectBillListener
+        arguments:
+            - '@biddy.worker.manager'
+            - '@monolog.logger'
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postFlush }
+
+#######  Credit listeners
+
+    biddy.event_listener.credit.credit_transaction_change_listener:
+        class: Biddy\EventListener\Credit\CreditTransactionChangeListener
+        arguments:
+            - '@biddy.worker.manager'
+            - '@monolog.logger'
+            - '%credit_transaction.not_enough_credit%'
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+
+    biddy.event_listener.credit.create_wallets_for_new_user_listener:
+        class: Biddy\EventListener\Credit\CreateWalletsForNewUserListener
+        arguments:
+            - '@biddy.worker.manager'
+            - '@monolog.logger'
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postFlush }
+
+#######  Rating listeners
+
+    biddy.event_listener.rating.calculate_seller_rating_when_product_rating_change_listener:
+        class: Biddy\EventListener\Rating\CalculateSellerRatingWhenProductRatingChangeListener
+        arguments:
+            - '@biddy.worker.manager'
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: preRemove }
+            - { name: doctrine.event_listener, event: postFlush }
+
+#######  Product listeners
+
+    biddy.product.event_listener.worker.create_daily_close_auction_when_add_product:
+        class: Biddy\EventListener\Product\CreateDailyCloseAuctionsWhenAddProductsListener
+        arguments:
+            - '@biddy.worker.manager'
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }

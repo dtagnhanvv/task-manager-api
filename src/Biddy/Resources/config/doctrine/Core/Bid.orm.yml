@@ -1,0 +1,45 @@
+Biddy\Entity\Core\Bid:
+    type: entity
+    table: core_bid
+    repositoryClass: Biddy\Repository\Core\BidRepository
+    gedmo:
+        soft_deleteable:
+            field_name: deletedAt
+            time_aware: false
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        price:
+            type: float
+            options:
+                default: 1
+            nullable: true
+        category:
+            type: text
+            nullable: true
+        quantity:
+            type: integer
+            nullable: true
+        deletedAt:
+            type: date
+            nullable: true
+        createdDate:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        status:
+            type: text
+            nullable: true
+    manyToOne:
+        buyer:
+            targetEntity: Biddy\Bundle\UserSystem\AccountBundle\Entity\User
+        auction:
+            targetEntity: Biddy\Entity\Core\Auction
+            inversedBy: bids
+        bill:
+            targetEntity: Biddy\Entity\Core\Bill
+            cascade: ['persist', 'detach', 'remove']

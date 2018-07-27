@@ -1,0 +1,34 @@
+Biddy\Entity\Core\Reaction:
+    type: entity
+    table: core_reaction
+    repositoryClass: Biddy\Repository\Core\ReactionRepository
+    gedmo:
+        soft_deleteable:
+            field_name: deletedAt
+            time_aware: false
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        emotion:
+            type: text
+            nullable: true
+        createdDate:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        deletedAt:
+            type: date
+            nullable: true
+    manyToOne:
+        viewer:
+            targetEntity: Biddy\Bundle\UserSystem\AccountBundle\Entity\User
+        product:
+            targetEntity: Biddy\Entity\Core\Product
+            inversedBy: reactions
+        comment:
+            targetEntity: Biddy\Entity\Core\Comment
+            inversedBy: reactions

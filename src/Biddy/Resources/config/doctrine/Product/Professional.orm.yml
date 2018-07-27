@@ -1,0 +1,18 @@
+Biddy\Entity\Product\Professional:
+    type: entity
+    table: core_product_type_professional
+    repositoryClass: Biddy\Repository\Product\ProfessionalRepository
+
+    fields:
+        requirements:
+            type: json_array
+            nullable: true
+        gender:
+            type: string
+            nullable: true
+        ages:
+            type: string
+            nullable: true
+        skills:
+            type: json_array
+            nullable: true

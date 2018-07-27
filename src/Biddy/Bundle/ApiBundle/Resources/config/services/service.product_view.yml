@@ -1,0 +1,62 @@
+parameters:
+    # entity class
+    biddy.entity.core.product_view.class: Biddy\Entity\Core\ProductView
+    # form class
+    biddy.form.type.core.product_view.class: Biddy\Form\Type\ProductViewFormType
+
+services:
+    biddy_api.handler.product_view:
+        class: Biddy\Handler\HandlerInterface
+        factory:
+            - '@biddy.handler.handler_manager.product_view'
+            - 'getHandler'
+        arguments:
+            - '@biddy.user_role'
+
+    biddy.repository.product_view:
+        class: Biddy\Repository\Core\ProductViewRepository
+        factory:
+            - '@doctrine.orm.entity_manager'
+            - 'getRepository'
+        arguments:
+            - '%biddy.entity.core.product_view.class%'
+
+    biddy.domain_manager.product_view:
+        class: Biddy\DomainManager\ProductViewManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@biddy.repository.product_view'
+
+    biddy.form.type.product_view:
+        class: '%biddy.form.type.core.product_view.class%'
+        tags:
+            - { name: form.type, alias: biddy_form_product_view }
+
+    biddy.handler.handlers.product_view.abstract:
+        class: Biddy\Handler\Handlers\Core\ProductViewHandlerAbstract
+        parent: biddy.handler.role_handler_abstract
+        abstract: true
+        public: false
+        arguments:
+            - '%biddy.form.type.core.product_view.class%'
+            - '@biddy.domain_manager.product_view'
+
+    biddy.handler.handlers.product_view.admin:
+        class: Biddy\Handler\Handlers\Core\Admin\ProductViewHandler
+        parent: biddy.handler.handlers.product_view.abstract
+        public: false
+        arguments:
+            - '@biddy_user.domain_manager.account'
+
+    biddy.handler.handlers.product_view.account:
+        class: Biddy\Handler\Handlers\Core\Account\ProductViewHandler
+        parent: biddy.handler.handlers.product_view.abstract
+        public: false
+
+    biddy.handler.handler_manager.product_view:
+        class: Biddy\Handler\HandlerManager
+        arguments:
+            - '%biddy.entity.core.product_view.class%'
+            -
+                - '@biddy.handler.handlers.product_view.admin'
+                - '@biddy.handler.handlers.product_view.account'

@@ -1,0 +1,70 @@
+parameters:
+    # entity class
+    biddy.entity.core.alert.class: Biddy\Entity\Core\Alert
+    # form class
+    biddy.form.type.core.alert.class: Biddy\Form\Type\AlertFormType
+
+services:
+    biddy_api.handler.alert:
+        class: Biddy\Handler\HandlerInterface
+        factory:
+            - '@biddy.handler.handler_manager.alert'
+            - 'getHandler'
+        arguments:
+            - '@biddy.user_role'
+
+    biddy.repository.alert:
+        class: Biddy\Repository\Core\AlertRepositoryInterface
+        factory:
+            - '@doctrine.orm.entity_manager'
+            - 'getRepository'
+        arguments:
+            - '%biddy.entity.core.alert.class%'
+
+    biddy.domain_manager.alert:
+        class: Biddy\DomainManager\AlertManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@biddy.repository.alert'
+
+    biddy.form.type.alert:
+        class: '%biddy.form.type.core.alert.class%'
+        tags:
+            - { name: form.type, alias: biddy_form_alert }
+
+    biddy.handler.handlers.alert.abstract:
+        class: Biddy\Handler\Handlers\Core\AlertHandlerAbstract
+        parent: biddy.handler.role_handler_abstract
+        abstract: true
+        public: false
+        arguments:
+            - '%biddy.form.type.core.alert.class%'
+            - '@biddy.domain_manager.alert'
+
+    biddy.handler.handlers.alert.admin:
+        class: Biddy\Handler\Handlers\Core\Admin\AlertHandler
+        parent: biddy.handler.handlers.alert.abstract
+        public: false
+        arguments:
+            - '@biddy_user.domain_manager.account'
+
+    biddy.handler.handlers.alert.sale:
+        class: Biddy\Handler\Handlers\Core\Sale\AlertHandler
+        parent: biddy.handler.handlers.alert.abstract
+        public: false
+        arguments:
+            - '@biddy_user.domain_manager.account'
+
+    biddy.handler.handlers.alert.account:
+        class: Biddy\Handler\Handlers\Core\Account\AlertHandler
+        parent: biddy.handler.handlers.alert.abstract
+        public: false
+
+    biddy.handler.handler_manager.alert:
+        class: Biddy\Handler\HandlerManager
+        arguments:
+            - '%biddy.entity.core.alert.class%'
+            -
+                - '@biddy.handler.handlers.alert.admin'
+                - '@biddy.handler.handlers.alert.sale'
+                - '@biddy.handler.handlers.alert.account'

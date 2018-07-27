@@ -1,0 +1,107 @@
+Biddy\Entity\Core\Product:
+    type: entity
+    table: core_product
+    repositoryClass: Biddy\Repository\Core\ProductRepository
+    gedmo:
+        soft_deleteable:
+            field_name: deletedAt
+            time_aware: false
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        subject:
+            type: text
+            nullable: true
+        summary:
+            type: text
+            nullable: true
+        detail:
+            type: text
+            nullable: true
+        address:
+            type: text
+            nullable: true
+        longitude:
+            type: string
+            length: 255
+            nullable: true
+        latitude:
+            type: string
+            length: 255
+            nullable: true
+        mode:
+            type: string
+            length: 255
+            nullable: true
+        visibility:
+            type: string
+            length: 255
+            nullable: true
+        businessSetting:
+            type: string
+            length: 255
+            nullable: true
+        businessRule:
+            type: string
+            length: 255
+            nullable: true
+        commentVisibility:
+            type: string
+            length: 255
+            nullable: true
+        createdDate:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        deletedAt:
+            type: date
+            nullable: true
+        rating:
+            type: float
+            options:
+                default: 1
+            nullable: true
+
+    inheritanceType: JOINED
+    discriminatorColumn:
+        name: type
+        type: string
+    discriminatorMap:
+        product: Biddy\Entity\Core\Product
+        freelancer: Biddy\Entity\Product\Freelancer
+        professinal: Biddy\Entity\Product\Professional
+
+    manyToOne:
+        seller:
+            targetEntity: Biddy\Bundle\UserSystem\AccountBundle\Entity\User
+
+    oneToMany:
+        comments:
+            targetEntity: Biddy\Entity\Core\Comment
+            cascade: ['persist', 'detach', 'remove']
+            mappedBy: product
+            orphanRemoval: true
+        reactions:
+            targetEntity: Biddy\Entity\Core\Reaction
+            cascade: ['persist', 'detach', 'remove']
+            mappedBy: product
+            orphanRemoval: true
+        productTags:
+            targetEntity: Biddy\Entity\Core\ProductTag
+            cascade: ['persist', 'detach', 'remove']
+            mappedBy: product
+            orphanRemoval: true
+        productRatings:
+            targetEntity: Biddy\Entity\Core\ProductRating
+            cascade: ['persist', 'detach', 'remove']
+            mappedBy: product
+            orphanRemoval: true
+        auctions:
+            targetEntity: Biddy\Entity\Core\Auction
+            cascade: ['persist', 'detach', 'remove']
+            mappedBy: product
+            orphanRemoval: true

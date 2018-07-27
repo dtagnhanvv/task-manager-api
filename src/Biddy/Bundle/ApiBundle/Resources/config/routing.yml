@@ -1,0 +1,69 @@
+api_get_token:
+    path:      /getToken
+    defaults:  { _controller: BiddyApiBundle:Token:getToken }
+    methods:  [POST]
+
+api_check_token:
+    path:      /checkToken
+    defaults:  { _controller: BiddyApiBundle:Token:checkToken }
+    methods:  [POST]
+
+api_alert:
+    type: rest
+    resource: Biddy\Bundle\ApiBundle\Controller\AlertController
+    name_prefix:  api_1_
+
+api_product:
+    type: rest
+    resource: Biddy\Bundle\ApiBundle\Controller\ProductController
+    name_prefix:  api_1_
+
+api_product_bid:
+    type: rest
+    resource: Biddy\Bundle\ApiBundle\Controller\BidController
+    name_prefix:  api_1_
+
+api_bill:
+    type: rest
+    resource: Biddy\Bundle\ApiBundle\Controller\BillController
+    name_prefix:  api_1_
+
+api_product_view:
+    type: rest
+    resource: Biddy\Bundle\ApiBundle\Controller\ProductViewController
+    name_prefix:  api_1_
+
+api_comment:
+    type: rest
+    resource: Biddy\Bundle\ApiBundle\Controller\CommentController
+    name_prefix:  api_1_
+
+api_reaction:
+    type: rest
+    resource: Biddy\Bundle\ApiBundle\Controller\ReactionController
+    name_prefix:  api_1_
+
+api_tag:
+    type: rest
+    resource: Biddy\Bundle\ApiBundle\Controller\TagController
+    name_prefix:  api_1_
+
+api_product_rating:
+    type: rest
+    resource: Biddy\Bundle\ApiBundle\Controller\ProductRatingController
+    name_prefix:  api_1_
+
+api_credit_transaction:
+    type: rest
+    resource: Biddy\Bundle\ApiBundle\Controller\CreditTransactionController
+    name_prefix:  api_1_
+
+api_auction:
+    type: rest
+    resource: Biddy\Bundle\ApiBundle\Controller\AuctionController
+    name_prefix:  api_1_
+
+api_wallet:
+    type: rest
+    resource: Biddy\Bundle\ApiBundle\Controller\WalletController
+    name_prefix:  api_1_

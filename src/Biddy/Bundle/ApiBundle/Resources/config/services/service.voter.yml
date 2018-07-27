@@ -1,0 +1,93 @@
+parameters:
+    biddy.security.auth.voter.alert.class: Biddy\Security\Authorization\Voter\AlertVoter
+    biddy.security.auth.voter.product.class: Biddy\Security\Authorization\Voter\ProductVoter
+    biddy.security.auth.voter.bid.class: Biddy\Security\Authorization\Voter\BidVoter
+    biddy.security.auth.voter.bill.class: Biddy\Security\Authorization\Voter\BillVoter
+    biddy.security.auth.voter.product_view.class: Biddy\Security\Authorization\Voter\ProductViewVoter
+    biddy.security.auth.voter.comment.class: Biddy\Security\Authorization\Voter\CommentVoter
+    biddy.security.auth.voter.reaction.class: Biddy\Security\Authorization\Voter\ReactionVoter
+    biddy.security.auth.voter.product_rating.class: Biddy\Security\Authorization\Voter\ProductRatingVoter
+    biddy.security.auth.voter.user.class: Biddy\Security\Authorization\Voter\UserVoter
+    biddy.security.auth.voter.sale.class: Biddy\Security\Authorization\Voter\SaleVoter
+    biddy.security.auth.voter.credit_transaction.class: Biddy\Security\Authorization\Voter\CreditTransactionVoter
+    biddy.security.auth.voter.auction.class: Biddy\Security\Authorization\Voter\AuctionVoter
+    biddy.security.auth.voter.wallet.class: Biddy\Security\Authorization\Voter\WalletVoter
+
+services:
+    biddy.security.auth.voter.alert:
+        class:  %biddy.security.auth.voter.alert.class%
+        public: false
+        tags:
+            - { name: security.voter}
+
+    biddy.security.auth.voter.product:
+        class:  %biddy.security.auth.voter.product.class%
+        public: false
+        tags:
+            - { name: security.voter}
+
+    biddy.security.auth.voter.bid:
+        class:  %biddy.security.auth.voter.bid.class%
+        public: false
+        tags:
+            - { name: security.voter}
+
+    biddy.security.auth.voter.bill:
+        class:  %biddy.security.auth.voter.bill.class%
+        public: false
+        tags:
+            - { name: security.voter}
+
+    biddy.security.auth.voter.product_view:
+        class:  %biddy.security.auth.voter.product_view.class%
+        public: false
+        tags:
+            - { name: security.voter}
+
+    biddy.security.auth.voter.comment:
+        class:  %biddy.security.auth.voter.comment.class%
+        public: false
+        tags:
+            - { name: security.voter}
+
+    biddy.security.auth.voter.reaction:
+        class:  %biddy.security.auth.voter.reaction.class%
+        public: false
+        tags:
+            - { name: security.voter}
+
+    biddy.security.auth.voter.product_rating:
+        class:  %biddy.security.auth.voter.product_rating.class%
+        public: false
+        tags:
+            - { name: security.voter}
+
+    biddy.security.auth.voter.user:
+        class:  %biddy.security.auth.voter.user.class%
+        public: false
+        tags:
+            - { name: security.voter}
+
+    biddy.security.auth.voter.sale:
+        class:  %biddy.security.auth.voter.sale.class%
+        public: false
+        tags:
+            - { name: security.voter}
+
+    biddy.security.auth.voter.credit_transaction:
+        class:  %biddy.security.auth.voter.credit_transaction.class%
+        public: false
+        tags:
+            - { name: security.voter}
+
+    biddy.security.auth.voter.auction:
+        class:  %biddy.security.auth.voter.auction.class%
+        public: false
+        tags:
+            - { name: security.voter}
+
+    biddy.security.auth.voter.wallet:
+        class:  %biddy.security.auth.voter.wallet.class%
+        public: false
+        tags:
+            - { name: security.voter}

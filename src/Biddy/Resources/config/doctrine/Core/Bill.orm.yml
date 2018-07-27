@@ -1,0 +1,45 @@
+Biddy\Entity\Core\Bill:
+    type: entity
+    table: core_bill
+    repositoryClass: Biddy\Repository\Core\BillRepository
+    gedmo:
+        soft_deleteable:
+            field_name: deletedAt
+            time_aware: false
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        price:
+            type: float
+            options:
+                default: 1
+            nullable: true
+        payment:
+            type: text
+            nullable: true
+        noteForSeller:
+            type: text
+            nullable: true
+        status:
+            type: text
+            nullable: true
+        deletedAt:
+            type: date
+            nullable: true
+        createdDate:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+    manyToOne:
+        buyer:
+            targetEntity: Biddy\Bundle\UserSystem\AccountBundle\Entity\User
+        seller:
+            targetEntity: Biddy\Bundle\UserSystem\AccountBundle\Entity\User
+        bid:
+            targetEntity: Biddy\Entity\Core\Bid
+        productRating:
+            targetEntity: Biddy\Entity\Core\ProductRating

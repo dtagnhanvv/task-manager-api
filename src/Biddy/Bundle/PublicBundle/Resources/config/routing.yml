@@ -1,0 +1,19 @@
+public_user:
+    type: rest
+    resource: Biddy\Bundle\PublicBundle\Controller\PublicUserController
+    name_prefix: public_1_
+
+public_upload:
+    type: rest
+    resource: Biddy\Bundle\PublicBundle\Controller\UploadController
+    name_prefix: public_1_
+
+public_product:
+    type: rest
+    resource: Biddy\Bundle\PublicBundle\Controller\PublicProductController
+    name_prefix: public_1_
+
+public_resetting:
+    type: rest
+    resource: Biddy\Bundle\PublicBundle\Controller\ResettingController
+    name_prefix: public_1_

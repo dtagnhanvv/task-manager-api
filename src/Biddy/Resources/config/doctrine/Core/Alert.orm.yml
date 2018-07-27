@@ -1,0 +1,52 @@
+Biddy\Entity\Core\Alert:
+    type: entity
+    table: core_alert
+    repositoryClass: Biddy\Repository\Core\AlertRepository
+    gedmo:
+        soft_deleteable:
+            field_name: deletedAt
+            time_aware: false
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        isRead:
+            type: boolean
+            option:
+                default: false
+        code:
+            type: integer
+            nullable: true
+        detail:
+            type: text
+            nullable: true
+        createdDate:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        type:
+            type: string
+            length: 20
+            nullable: true
+        isSent:
+            type: boolean
+            option:
+                default: false
+            nullable: true
+        deletedAt:
+            type: date
+            nullable: true
+        targetType:
+            type: string
+            length: 20
+            nullable: true
+        targetId:
+            type: integer
+            nullable: true
+    manyToOne:
+        account:
+            targetEntity: Biddy\Bundle\UserBundle\Entity\User
+            nullable: true

@@ -1,0 +1,92 @@
+Biddy\Bundle\UserSystem\AdminBundle\Entity\User:
+    exclusion_policy: ALL
+    accessor_order: custom
+    custom_accessor_order:
+        - id
+        - username
+        #- adminname, email, roles, enabledModules, adminRoles, last_login, enabled: inherited from Biddy\Bundle\UserBundle\Entity\User
+        - billingRate
+        - firstName
+        - lastName
+        - company
+        - phone
+        - city
+        - state
+        - address
+        - postalCode
+        - country
+        - settings
+        - moduleConfigs
+        - tagDomain
+        - exchanges
+        - bidders
+        - emailSendAlert
+    properties:
+        id:
+            expose: true
+            groups: [admin.summary, admin.uuid, admin.detail, admin.minimum]
+        enabledModules:
+            groups: [admin.summary, admin.uuid, admin.detail, admin.minimum]
+        username:
+            expose: true
+            groups: [admin.summary, admin.uuid, admin.detail, admin.minimum]
+        billingRate:
+            expose: true
+            groups: [admin.detail]
+        firstName:
+            expose: true
+            groups: [admin.detail]
+        lastName:
+            expose: true
+            groups: [admin.detail]
+        company:
+            expose: true
+            groups: [admin.summary, admin.uuid, admin.detail]
+        phone:
+            expose: true
+            groups: [admin.detail]
+        city:
+            expose: true
+            groups: [admin.detail]
+        state:
+            expose: true
+            groups: [admin.detail]
+        address:
+            expose: true
+            groups: [admin.detail]
+        postalCode:
+            expose: true
+            groups: [admin.detail]
+        country:
+            expose: true
+            groups: [admin.detail]
+        settings:
+            expose: true
+            groups: [admin.detail]
+        moduleConfigs:
+            expose: true
+            groups: [admin.detail]
+        tagDomain:
+            expose: true
+            groups: [admin.detail]
+        exchanges:
+            expose: true
+            groups: [admin.summary, admin.uuid, admin.detail]
+        bidders:
+            expose: true
+            groups: [admin.summary, admin.uuid, admin.detail]
+        emailSendAlert:
+            expose: true
+            groups: [admin.summary, admin.uuid, admin.detail]
+        uuid:
+            expose: true
+            groups: [admin.uuid]
+        adminGroup:
+            expose: true
+            groups: [admin.summary, admin.uuid, admin.detail]
+        rating:
+            expose: true
+            groups: [admin.summary, admin.uuid, admin.detail, admin.minimum]
+        credit:
+            expose: true
+            groups: [user.summary, user.uuid, user.detail, user.minimum]

@@ -1,0 +1,15 @@
+Biddy\Entity\Core\Wallet:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [wallet.detail, wallet.summary, wallet.minimum]
+        name:
+            expose: true
+            groups: [wallet.detail, wallet.summary, wallet.minimum]
+        type:
+            expose: true
+            groups: [wallet.detail, wallet.summary, wallet.minimum]
+        credit:
+            expose: true
+            groups: [wallet.detail, wallet.summary, wallet.minimum]

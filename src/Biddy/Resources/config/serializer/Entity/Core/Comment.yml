@@ -1,0 +1,36 @@
+Biddy\Entity\Core\Comment:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [comment.detail, comment.summary, comment.minimum]
+        createdDate:
+            expose: true
+            groups: [comment.detail, comment.summary]
+        modified:
+            expose: true
+            groups: [comment.detail, comment.summary, comment.minimum]
+        content:
+            expose: true
+            groups: [comment.detail, comment.summary, comment.minimum]
+        contentType:
+            expose: true
+            groups: [comment.detail, comment.summary]
+        raw:
+            expose: true
+            groups: [comment.detail, comment.summary]
+        estimatedHeight:
+            expose: true
+            groups: [comment.detail, comment.summary]
+        migrationStatus:
+            expose: true
+            groups: [comment.detail, comment.summary]
+        author:
+            expose: true
+            groups: [comment.detail, comment.summary, comment.minimum]
+        childComments:
+            expose: true
+            groups: [comment.detail, comment.summary]
+        reactions:
+            expose: true
+            groups: [comment.detail, comment.summary]

@@ -1,0 +1,15 @@
+Biddy\Entity\Product\Freelancer:
+    type: entity
+    table: core_product_type_freelancer
+    repositoryClass: Biddy\Repository\Product\FreelancerRepository
+
+    fields:
+        requirements:
+            type: json_array
+            nullable: true
+        gender:
+            type: string
+            nullable: true
+        ages:
+            type: string
+            nullable: true

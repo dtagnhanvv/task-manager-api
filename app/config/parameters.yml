@@ -1,0 +1,52 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: biddy_api
+    database_user: tagcadedev
+    database_password: tagcadedev
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    mailer_port: 1025
+    mailer_sender: tagcade.dev@gmail.com
+    mailer_sender_name: Tagcade.dev
+    password_resetting_link: 'http://localhost:9010/#/reset/changePassword'
+    locale: en
+    secret: ThisTokenIsNotSoSecretChangeIt
+    pheanstalk_primary_host: 127.0.0.1
+    jwt_private_key_path: '%kernel.root_dir%/var/jwt/private.pem'
+    jwt_public_key_path: '%kernel.root_dir%/var/jwt/public.pem'
+    jwt_key_pass_phrase: tagcade
+    jwt_token_ttl: 86400a
+    upload_file_dir: '%kernel.root_dir%/../web/data/file_upload'
+    log_file_dir: '%kernel.root_dir%/../app/logs/import'
+    biddy.redis.app_cache.host: 127.0.0.1
+    biddy.redis.app_cache.port: 6379
+    biddy.worker.process_linear_job_name: processLinearJob
+    biddy.worker.concurrent_tube_name: biddy-api-worker
+    biddy.worker.lock_key_prefix: 'biddy:lock_worker_'
+    biddy.worker.linear_job_priority_key_prefix: 'biddy:linear_job_next_priority_tube_'
+    biddy.worker.pending_job_count_key_prefix: 'biddy:pending_job_count_'
+    biddy.worker.expire_linear_job_prefix: 'biddy:linear_tube_expire_job_'
+    biddy.product.rating.min_rating: 0
+    biddy.product.rating.max_rating: 10
+    user_register_duplicate_email: 'Email này đã được đăng ký'
+    user_register_duplicate_username: 'Tài khoản này đã được đăng ký'
+    user_register_duplicate_phone: 'Số điện thoại này đã được đăng ký'
+    server_name: 'http://api.biddy.test'
+    credit_transaction.amount_not_set: 'Thiếu số tiền cần chuyển'
+    credit_transaction.invalid_amount: 'Số tiền phải dương'
+    credit_transaction.not_enough_credit: 'Không đủ tiền để chuyển'
+    bidding.rule.manual: manual
+    bidding.rule.automated_by_price: automated
+    bidding.rule.cancel: cancel
+    credit_logging_folder_path: '%kernel.root_dir%/../logging/credit'
+    credit_transaction.wallet_not_exist: 'Tải khoản chưa có ví này'
+    auction.batchsize: 10
+    auction.payment_not_supported: 'Không hỗ trợ phương thức thanh toán này'
+    payment.fee.credit: 0.03
+    payment.fee.offline: 0.05
+    'none_handler_accept_this request': 'Không có handler nào hỗ trợ tác vụ này'

@@ -1,0 +1,18 @@
+parameters:
+    # entity class
+    biddy.entity.core.product_tag.class: Biddy\Entity\Core\ProductTag
+    # form class
+    biddy.form.type.core.product_tag.class: Biddy\Form\Type\ProductTagFormType
+
+services:
+    biddy.form.type.product_tag:
+        class: '%biddy.form.type.core.product_tag.class%'
+        tags:
+            - { name: form.type, alias: biddy_form_product_tag }
+    biddy.repository.product_tag:
+        class: Biddy\Repository\Core\ProductTagRepository
+        factory:
+            - '@doctrine.orm.entity_manager'
+            - 'getRepository'
+        arguments:
+            - '%biddy.entity.core.product_tag.class%'

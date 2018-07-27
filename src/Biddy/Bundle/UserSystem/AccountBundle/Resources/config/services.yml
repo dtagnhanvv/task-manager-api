@@ -1,0 +1,5 @@
+services:
+    biddy_user_system_account.set_account_role_listener:
+        class: Biddy\Bundle\UserSystem\AccountBundle\EventListener\SetAccountRoleListener
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }

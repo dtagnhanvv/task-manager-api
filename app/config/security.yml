@@ -1,0 +1,71 @@
+security:
+    access_decision_manager:
+        strategy: unanimous
+
+    encoders:
+        Biddy\Bundle\UserBundle\Entity\User: sha512
+
+    role_hierarchy:
+        ROLE_ACCOUNT:   ROLE_USER
+        ROLE_ADMIN:     ROLE_USER
+        ROLE_SALE:      ROLE_USER
+
+    providers:
+        biddy_user_account:
+            id: biddy_user_system_account.user_provider.username
+        biddy_user_sale:
+            id: biddy_user_system_sale.user_provider.username
+        biddy_user_admin:
+            id: biddy_user_system_admin.user_provider.username
+        biddy_user:
+            chain:
+                providers: [biddy_user_account, biddy_user_admin, biddy_user_sale]
+        # fos userbundle user provider
+        fos_userbundle:
+            id: fos_user.user_manager
+
+    firewalls:
+        dev:
+            pattern:    ^/(_(profiler|wdt)|css|images|js)/
+            security:   false
+
+        apidoc:
+            pattern:    ^/docs/?$
+            security:   false
+
+        gettoken:
+            pattern:    ^/api/v1/getToken$
+            stateless:  true
+            gfreeau_get_jwt:
+                username_parameter: username
+                password_parameter: password
+                # REMOVED: post_only:          true
+                success_handler:    biddy_user.handler.authentication_success
+                failure_handler:    lexik_jwt_authentication.handler.authentication_failure
+            provider: biddy_user
+
+        public:
+            pattern: ^/api/public/v1/
+            stateless: true
+            security: false
+            anonymous: ~
+
+        resetting:
+            pattern: ^/api/v1/resetting/
+            stateless: true
+            security: false
+            anonymous: ~
+            provider:  biddy_user_account
+
+        api:
+            pattern:    ^/api/
+            stateless:  true
+            lexik_jwt:
+                throw_exceptions:   true
+                create_entry_point: false
+            provider:  biddy_user
+
+    access_control:
+        - { path: ^/api/admin/, roles: ROLE_ADMIN }
+        - { path: ^/api/sale/, roles: ROLE_SALE }
+        - { path: ^/api/, roles: ROLE_USER }

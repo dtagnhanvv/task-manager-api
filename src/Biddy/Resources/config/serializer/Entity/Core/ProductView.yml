@@ -1,0 +1,15 @@
+Biddy\Entity\Core\ProductView:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [product_view.detail, product_view.summary]
+        createdDate:
+            expose: true
+            groups: [product_view.detail, product_view.summary]
+        viewer:
+            expose: true
+            groups: [product_view.detail, product_view.summary]
+        product:
+            expose: true
+            groups: [product_view.detail, product_view.summary]

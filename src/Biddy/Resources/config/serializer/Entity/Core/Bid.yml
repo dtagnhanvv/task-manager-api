@@ -1,0 +1,26 @@
+Biddy\Entity\Core\Bid:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [bid.detail, bid.summary, bid.minimum]
+        price:
+            expose: true
+            groups: [bid.detail, bid.summary, bid.minimum]
+        category:
+            expose: true
+            groups: [bid.detail, bid.summary, bid.minimum]
+        quantity:
+            expose: true
+            groups: [bid.detail, bid.summary, bid.minimum]
+        buyer:
+            expose: true
+            groups: [bid.detail, bid.summary, bid.minimum]
+        auction:
+            expose: true
+            groups: [bid.detail, bid.summary, bid.minimum]
+        createdDate:
+            groups: [bid.detail, bid.summary]
+        status:
+            expose: true
+            groups: [bid.detail, bid.summary, bid.minimum]

@@ -1,0 +1,65 @@
+parameters:
+    # entity class
+    biddy.entity.core.product_rating.class: Biddy\Entity\Core\ProductRating
+    # form class
+    biddy.form.type.core.product_rating.class: Biddy\Form\Type\ProductRatingFormType
+
+services:
+    biddy_api.handler.product_rating:
+        class: Biddy\Handler\HandlerInterface
+        factory:
+            - '@biddy.handler.handler_manager.product_rating'
+            - 'getHandler'
+        arguments:
+            - '@biddy.user_role'
+
+    biddy.repository.product_rating:
+        class: Biddy\Repository\Core\ProductRatingRepository
+        factory:
+            - '@doctrine.orm.entity_manager'
+            - 'getRepository'
+        arguments:
+            - '%biddy.entity.core.product_rating.class%'
+
+    biddy.domain_manager.product_rating:
+        class: Biddy\DomainManager\ProductRatingManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@biddy.repository.product_rating'
+
+    biddy.form.type.product_rating:
+        class: '%biddy.form.type.core.product_rating.class%'
+        arguments:
+            - '%biddy.product.rating.max_rating%'
+            - '%biddy.product.rating.min_rating%'
+        tags:
+            - { name: form.type, alias: biddy_form_product_rating }
+
+    biddy.handler.handlers.product_rating.abstract:
+        class: Biddy\Handler\Handlers\Core\ProductRatingHandlerAbstract
+        parent: biddy.handler.role_handler_abstract
+        abstract: true
+        public: false
+        arguments:
+            - '%biddy.form.type.core.product_rating.class%'
+            - '@biddy.domain_manager.product_rating'
+
+    biddy.handler.handlers.product_rating.admin:
+        class: Biddy\Handler\Handlers\Core\Admin\ProductRatingHandler
+        parent: biddy.handler.handlers.product_rating.abstract
+        public: false
+        arguments:
+            - '@biddy_user.domain_manager.account'
+
+    biddy.handler.handlers.product_rating.account:
+        class: Biddy\Handler\Handlers\Core\Account\ProductRatingHandler
+        parent: biddy.handler.handlers.product_rating.abstract
+        public: false
+
+    biddy.handler.handler_manager.product_rating:
+        class: Biddy\Handler\HandlerManager
+        arguments:
+            - '%biddy.entity.core.product_rating.class%'
+            -
+                - '@biddy.handler.handlers.product_rating.admin'
+                - '@biddy.handler.handlers.product_rating.account'

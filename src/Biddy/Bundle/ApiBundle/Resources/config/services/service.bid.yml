@@ -1,0 +1,64 @@
+parameters:
+    # entity class
+    biddy.entity.core.bid.class: Biddy\Entity\Core\Bid
+    # form class
+    biddy.form.type.core.bid.class: Biddy\Form\Type\BidFormType
+
+services:
+    biddy_api.handler.bid:
+        class: Biddy\Handler\HandlerInterface
+        factory:
+            - '@biddy.handler.handler_manager.bid'
+            - 'getHandler'
+        arguments:
+            - '@biddy.user_role'
+
+    biddy.repository.bid:
+        class: Biddy\Repository\Core\BidRepository
+        factory:
+            - '@doctrine.orm.entity_manager'
+            - 'getRepository'
+        arguments:
+            - '%biddy.entity.core.bid.class%'
+
+    biddy.domain_manager.bid:
+        class: Biddy\DomainManager\BidManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@biddy.repository.bid'
+
+    biddy.form.type.bid:
+        class: '%biddy.form.type.core.bid.class%'
+        tags:
+            - { name: form.type, alias: biddy_form_bid }
+        arguments:
+            - '%credit_transaction.not_enough_credit%'
+
+    biddy.handler.handlers.bid.abstract:
+        class: Biddy\Handler\Handlers\Core\BidHandlerAbstract
+        parent: biddy.handler.role_handler_abstract
+        abstract: true
+        public: false
+        arguments:
+            - '%biddy.form.type.core.bid.class%'
+            - '@biddy.domain_manager.bid'
+
+    biddy.handler.handlers.bid.admin:
+        class: Biddy\Handler\Handlers\Core\Admin\BidHandler
+        parent: biddy.handler.handlers.bid.abstract
+        public: false
+        arguments:
+            - '@biddy_user.domain_manager.account'
+
+    biddy.handler.handlers.bid.account:
+        class: Biddy\Handler\Handlers\Core\Account\BidHandler
+        parent: biddy.handler.handlers.bid.abstract
+        public: false
+
+    biddy.handler.handler_manager.bid:
+        class: Biddy\Handler\HandlerManager
+        arguments:
+            - '%biddy.entity.core.bid.class%'
+            -
+                - '@biddy.handler.handlers.bid.admin'
+                - '@biddy.handler.handlers.bid.account'

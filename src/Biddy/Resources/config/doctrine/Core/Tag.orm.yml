@@ -1,0 +1,48 @@
+Biddy\Entity\Core\Tag:
+    type: entity
+    table: core_tag
+    repositoryClass: Biddy\Repository\Core\TagRepository
+    gedmo:
+        soft_deleteable:
+            field_name: deletedAt
+            time_aware: false
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        createdDate:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        deletedAt:
+            type: date
+            nullable: true
+        name:
+            type: text
+            nullable: true
+        type:
+            type: text
+            nullable: true
+        url:
+            type: text
+            nullable: true
+
+    manyToOne:
+        parentTag:
+            targetEntity: Biddy\Entity\Core\Tag
+            inversedBy: childTags
+
+    oneToMany:
+        productTags:
+            targetEntity: Biddy\Entity\Core\ProductTag
+            cascade: ['persist', 'detach', 'remove']
+            mappedBy: tag
+            orphanRemoval: true
+        childTags:
+            targetEntity: Biddy\Entity\Core\Tag
+            cascade: ['persist', 'detach', 'remove']
+            mappedBy: parentTag
+            orphanRemoval: true

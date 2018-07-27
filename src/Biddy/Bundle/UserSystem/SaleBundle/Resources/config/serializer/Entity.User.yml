@@ -1,0 +1,95 @@
+Biddy\Bundle\UserSystem\SaleBundle\Entity\User:
+    exclusion_policy: ALL
+    accessor_order: custom
+    custom_accessor_order:
+        - id
+        - username
+        #- salename, email, roles, enabledModules, saleRoles, last_login, enabled: inherited from Biddy\Bundle\UserBundle\Entity\User
+        - billingRate
+        - firstName
+        - lastName
+        - company
+        - phone
+        - city
+        - state
+        - address
+        - postalCode
+        - country
+        - settings
+        - moduleConfigs
+        - tagDomain
+        - exchanges
+        - bidders
+        - emailSendAlert
+    properties:
+        id:
+            expose: true
+            groups: [sale.summary, sale.uuid, sale.detail, sale.minimum]
+        enabledModules:
+            groups: [sale.summary, sale.uuid, sale.detail, sale.minimum]
+        username:
+            expose: true
+            groups: [sale.summary, sale.uuid, sale.detail, sale.minimum]
+        billingRate:
+            expose: true
+            groups: [sale.detail]
+        firstName:
+            expose: true
+            groups: [sale.detail]
+        lastName:
+            expose: true
+            groups: [sale.detail]
+        company:
+            expose: true
+            groups: [sale.summary, sale.uuid, sale.detail]
+        phone:
+            expose: true
+            groups: [sale.detail]
+        city:
+            expose: true
+            groups: [sale.detail]
+        state:
+            expose: true
+            groups: [sale.detail]
+        address:
+            expose: true
+            groups: [sale.detail]
+        postalCode:
+            expose: true
+            groups: [sale.detail]
+        country:
+            expose: true
+            groups: [sale.detail]
+        settings:
+            expose: true
+            groups: [sale.detail]
+        moduleConfigs:
+            expose: true
+            groups: [sale.detail]
+        tagDomain:
+            expose: true
+            groups: [sale.detail]
+        exchanges:
+            expose: true
+            groups: [sale.summary, sale.uuid, sale.detail]
+        bidders:
+            expose: true
+            groups: [sale.summary, sale.uuid, sale.detail]
+        emailSendAlert:
+            expose: true
+            groups: [sale.summary, sale.uuid, sale.detail]
+        uuid:
+            expose: true
+            groups: [sale.uuid]
+        saleGroup:
+            expose: true
+            groups: [sale.summary, sale.uuid, sale.detail]
+        profileImageUrl:
+            expose: true
+            groups: [sale.summary, sale.uuid, sale.detail, sale.minimum]
+        rating:
+            expose: true
+            groups: [sale.summary, sale.uuid, sale.detail, sale.minimum]
+        credit:
+            expose: true
+            groups: [user.summary, user.uuid, user.detail, user.minimum]
