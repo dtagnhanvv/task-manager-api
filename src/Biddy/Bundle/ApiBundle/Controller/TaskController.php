@@ -2,6 +2,7 @@
 
 namespace Biddy\Bundle\ApiBundle\Controller;
 
+use Biddy\Service\Util\TaskUtilTrait;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\View\View;
@@ -19,6 +20,7 @@ use Biddy\Model\Core\TaskInterface;
 class TaskController extends RestControllerAbstract implements ClassResourceInterface
 {
     use GetEntityFromIdTrait;
+    use TaskUtilTrait;
 
     /**
      * Get all tasks
@@ -53,38 +55,10 @@ class TaskController extends RestControllerAbstract implements ClassResourceInte
         $qb = $taskRepository->getTasksForUserQuery($user, $this->getParams());
 
         $pagination = $this->getPagination($qb, $request);
-        $pagination['records'] = $this->serializeTasks($pagination['records'], $this->get('biddy.domain_manager.auction'));
-        $pagination['totalUnread'] = $taskRepository->getTotalUnread($user);
-        
+        $pagination['records'] = $this->serializeTasks($pagination['records']);
+
         return $pagination;
     }
-
-    /**
-     * Get unread tasks count
-     *
-     * @Rest\View(serializerGroups={"task.detail", "user.summary"})
-     *
-     * @Rest\QueryParam(name="account", nullable=true, requirements="\d+", description="the account id")
-     *
-     * @ApiDoc(
-     *  section = "Task",
-     *  resource = true,
-     *  statusCodes = {
-     *      200 = "Returned when successful"
-     *  }
-     * )
-     *
-     * @param Request $request
-     * @return \Biddy\Model\Core\TaskInterface[]
-     */
-    public function cgetUnreadAction(Request $request)
-    {
-        $user = $this->getUserDueToQueryParamAccount($request, 'account');
-        $taskRepository = $this->get('biddy.repository.task');
-
-        return $taskRepository->getTotalUnread($user);
-    }
-
 
     /**
      * Get all tasks

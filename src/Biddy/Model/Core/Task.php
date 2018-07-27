@@ -17,6 +17,7 @@ class Task implements TaskInterface
     protected $board;
     protected $status;
     protected $review;
+    protected $url;
 
     /** @var UserEntityInterface */
     protected $owner;
@@ -225,6 +226,24 @@ class Task implements TaskInterface
     public function setProject($project)
     {
         $this->project = $project;
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
 
         return $this;
     }

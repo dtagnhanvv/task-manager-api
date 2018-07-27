@@ -16,6 +16,7 @@ class Task extends TaskModel
     protected $cardNumber;
     protected $releasePlan;
     protected $board;
+    protected $url;
     protected $status;
     protected $review;
 

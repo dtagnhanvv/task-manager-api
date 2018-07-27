@@ -22,7 +22,8 @@ class TaskFormType extends AbstractRoleSpecificFormType
             ->add('releasePlan')
             ->add('review')
             ->add('reviewer')
-            ->add('status');
+            ->add('status')
+            ->add('url');
 
         $builder->addEventListener(
             FormEvents::POST_SUBMIT,

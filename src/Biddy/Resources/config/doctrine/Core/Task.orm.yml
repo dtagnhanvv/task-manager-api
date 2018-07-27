@@ -38,6 +38,9 @@ Biddy\Entity\Core\Task:
         review:
             type: text
             nullable: true
+        url:
+            type: text
+            nullable: true
     manyToOne:
         owner:
             targetEntity: Biddy\Bundle\UserBundle\Entity\User

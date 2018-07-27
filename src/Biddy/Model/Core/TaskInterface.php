@@ -115,4 +115,15 @@ interface TaskInterface extends ModelInterface
      * @param mixed $project
      */
     public function setProject($project);
+
+    /**
+     * @return mixed
+     */
+    public function getUrl();
+
+    /**
+     * @param mixed $url
+     * @return self
+     */
+    public function setUrl($url);
 }
