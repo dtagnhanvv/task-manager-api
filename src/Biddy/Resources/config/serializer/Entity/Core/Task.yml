@@ -1,0 +1,33 @@
+Biddy\Entity\Core\Task:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [task.detail, task.summary]
+        code:
+            expose: true
+            groups: [task.detail, task.summary]
+        isRead:
+            expose: true
+            groups: [task.detail, task.summary]
+        detail:
+            expose: true
+            groups: [task.detail, task.summary]
+        createdDate:
+            expose: true
+            groups: [task.detail, task.summary]
+        type:
+            expose: true
+            groups: [task.detail, task.summary]
+        account:
+            expose: true
+            groups: [task.summary]
+        isSent:
+            expose: true
+            groups: [task.detail, task.summary]
+        targetType:
+            expose: true
+            groups: [task.detail, task.summary]
+        targetId:
+            expose: true
+            groups: [task.detail, task.summary]

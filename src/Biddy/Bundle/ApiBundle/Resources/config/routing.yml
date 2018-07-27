@@ -67,3 +67,8 @@ api_wallet:
     type: rest
     resource: Biddy\Bundle\ApiBundle\Controller\WalletController
     name_prefix:  api_1_
+
+api_task:
+    type: rest
+    resource: Biddy\Bundle\ApiBundle\Controller\TaskController
+    name_prefix:  api_1_

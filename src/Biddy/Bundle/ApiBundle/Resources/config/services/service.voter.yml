@@ -12,6 +12,7 @@ parameters:
     biddy.security.auth.voter.credit_transaction.class: Biddy\Security\Authorization\Voter\CreditTransactionVoter
     biddy.security.auth.voter.auction.class: Biddy\Security\Authorization\Voter\AuctionVoter
     biddy.security.auth.voter.wallet.class: Biddy\Security\Authorization\Voter\WalletVoter
+    biddy.security.auth.voter.task.class: Biddy\Security\Authorization\Voter\TaskVoter
 
 services:
     biddy.security.auth.voter.alert:
@@ -88,6 +89,12 @@ services:
 
     biddy.security.auth.voter.wallet:
         class:  %biddy.security.auth.voter.wallet.class%
+        public: false
+        tags:
+            - { name: security.voter}
+
+    biddy.security.auth.voter.task:
+        class:  %biddy.security.auth.voter.task.class%
         public: false
         tags:
             - { name: security.voter}

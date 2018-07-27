@@ -1,0 +1,50 @@
+Biddy\Entity\Core\Task:
+    type: entity
+    table: core_task
+    repositoryClass: Biddy\Repository\Core\TaskRepository
+    gedmo:
+        soft_deleteable:
+            field_name: deletedAt
+            time_aware: false
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        createdDate:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        deletedAt:
+            type: date
+            nullable: true
+
+        board:
+            type: string
+            length: 20
+            nullable: true
+        cardNumber:
+            type: integer
+            nullable: true
+
+        status:
+            type: string
+            length: 20
+            nullable: true
+        releasePlan:
+            type: integer
+            nullable: true
+
+        review:
+            type: string
+            length: 20
+            nullable: true
+    manyToOne:
+        owner:
+            targetEntity: Biddy\Bundle\UserBundle\Entity\User
+            nullable: true
+        reviewer:
+            targetEntity: Biddy\Bundle\UserBundle\Entity\User
+            nullable: true

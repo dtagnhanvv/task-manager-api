@@ -1,0 +1,70 @@
+parameters:
+    # entity class
+    biddy.entity.core.task.class: Biddy\Entity\Core\Task
+    # form class
+    biddy.form.type.core.task.class: Biddy\Form\Type\TaskFormType
+
+services:
+    biddy_api.handler.task:
+        class: Biddy\Handler\HandlerInterface
+        factory:
+            - '@biddy.handler.handler_manager.task'
+            - 'getHandler'
+        arguments:
+            - '@biddy.user_role'
+
+    biddy.repository.task:
+        class: Biddy\Repository\Core\TaskRepository
+        factory:
+            - '@doctrine.orm.entity_manager'
+            - 'getRepository'
+        arguments:
+            - '%biddy.entity.core.task.class%'
+
+    biddy.domain_manager.task:
+        class: Biddy\DomainManager\TaskManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@biddy.repository.task'
+
+    biddy.form.type.task:
+        class: '%biddy.form.type.core.task.class%'
+        tags:
+            - { name: form.type, alias: biddy_form_task }
+
+    biddy.handler.handlers.task.abstract:
+        class: Biddy\Handler\Handlers\Core\TaskHandlerAbstract
+        parent: biddy.handler.role_handler_abstract
+        abstract: true
+        public: false
+        arguments:
+            - '%biddy.form.type.core.task.class%'
+            - '@biddy.domain_manager.task'
+
+    biddy.handler.handlers.task.admin:
+        class: Biddy\Handler\Handlers\Core\Admin\TaskHandler
+        parent: biddy.handler.handlers.task.abstract
+        public: false
+        arguments:
+            - '@biddy_user.domain_manager.account'
+
+    biddy.handler.handlers.task.sale:
+        class: Biddy\Handler\Handlers\Core\Sale\TaskHandler
+        parent: biddy.handler.handlers.task.abstract
+        public: false
+        arguments:
+            - '@biddy_user.domain_manager.account'
+
+    biddy.handler.handlers.task.account:
+        class: Biddy\Handler\Handlers\Core\Account\TaskHandler
+        parent: biddy.handler.handlers.task.abstract
+        public: false
+
+    biddy.handler.handler_manager.task:
+        class: Biddy\Handler\HandlerManager
+        arguments:
+            - '%biddy.entity.core.task.class%'
+            -
+                - '@biddy.handler.handlers.task.admin'
+                - '@biddy.handler.handlers.task.sale'
+                - '@biddy.handler.handlers.task.account'

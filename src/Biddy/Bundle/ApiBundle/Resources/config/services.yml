@@ -4,6 +4,7 @@ imports:
     - { resource: services/service.listener.yml}
     - { resource: services/service.voter.yml }
     - { resource: services/service.alert.yml }
+    - { resource: services/service.task.yml }
     - { resource: services/service.product.yml }
     - { resource: services/service.bid.yml }
     - { resource: services/service.bill.yml }
