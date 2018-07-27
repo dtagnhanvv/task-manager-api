@@ -41,7 +41,7 @@ parameters:
     user_register_duplicate_email: 'Email này đã được đăng ký'
     user_register_duplicate_username: 'Tài khoản này đã được đăng ký'
     user_register_duplicate_phone: 'Số điện thoại này đã được đăng ký'
-    server_name: 'http://api.biddy.test'
+    server_name: 'http://api.task.test'
     credit_transaction.amount_not_set: 'Thiếu số tiền cần chuyển'
     credit_transaction.invalid_amount: 'Số tiền phải dương'
     credit_transaction.not_enough_credit: 'Không đủ tiền để chuyển'
