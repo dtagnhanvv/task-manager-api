@@ -4,25 +4,25 @@ Biddy\Entity\Core\Task:
         id:
             expose: true
             groups: [task.detail, task.summary]
-        code:
+        project:
             expose: true
             groups: [task.detail, task.summary]
-        isRead:
+        board:
             expose: true
             groups: [task.detail, task.summary]
-        detail:
+        cardNumber:
             expose: true
             groups: [task.detail, task.summary]
         createdDate:
             expose: true
             groups: [task.detail, task.summary]
-        type:
+        status:
             expose: true
             groups: [task.detail, task.summary]
-        account:
+        releasePlan:
             expose: true
             groups: [task.summary]
-        isSent:
+        review:
             expose: true
             groups: [task.detail, task.summary]
         targetType:

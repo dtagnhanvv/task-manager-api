@@ -15,6 +15,7 @@ class TaskFormType extends AbstractRoleSpecificFormType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('project')
             ->add('board')
             ->add('cardNumber')
             ->add('owner')

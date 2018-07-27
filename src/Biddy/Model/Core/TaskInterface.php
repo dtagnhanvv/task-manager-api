@@ -105,4 +105,14 @@ interface TaskInterface extends ModelInterface
      * @return self
      */
     public function setReviewer($reviewer);
+
+    /**
+     * @return mixed
+     */
+    public function getProject();
+
+    /**
+     * @param mixed $project
+     */
+    public function setProject($project);
 }

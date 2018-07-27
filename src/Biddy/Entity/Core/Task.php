@@ -12,6 +12,7 @@ class Task extends TaskModel
     protected $deletedAt;
     protected $createdDate;
 
+    protected $project;
     protected $cardNumber;
     protected $releasePlan;
     protected $board;

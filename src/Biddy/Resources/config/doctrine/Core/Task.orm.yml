@@ -20,26 +20,23 @@ Biddy\Entity\Core\Task:
         deletedAt:
             type: date
             nullable: true
-
+        project:
+            type: text
+            nullable: true
         board:
-            type: string
-            length: 20
+            type: text
             nullable: true
         cardNumber:
             type: integer
             nullable: true
-
         status:
-            type: string
-            length: 20
+            type: text
             nullable: true
         releasePlan:
             type: integer
             nullable: true
-
         review:
-            type: string
-            length: 20
+            type: text
             nullable: true
     manyToOne:
         owner:

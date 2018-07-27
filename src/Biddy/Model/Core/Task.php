@@ -11,6 +11,7 @@ class Task implements TaskInterface
     protected $deletedAt;
     protected $createdDate;
 
+    protected $project;
     protected $cardNumber;
     protected $releasePlan;
     protected $board;
@@ -206,6 +207,24 @@ class Task implements TaskInterface
     public function setReviewer($reviewer)
     {
         $this->reviewer = $reviewer;
+
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getProject()
+    {
+        return $this->project;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setProject($project)
+    {
+        $this->project = $project;
 
         return $this;
     }
