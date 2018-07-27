@@ -1,12 +1,12 @@
 server {
     listen 80;
 
-    server_name api.biddy.test;
-    root /var/www/api.biddy.test/web;
+    server_name api.task.test;
+    root /var/www/api.task.test/web;
     index index.php index.html;
 
-    access_log /var/log/nginx/api.biddy.test.access.log;
-    error_log /var/log/nginx/api.biddy.test.error.log;
+    access_log /var/log/nginx/api.task.test.access.log;
+    error_log /var/log/nginx/api.task.test.error.log;
 
     location / {
         # try to serve file directly, fallback to rewrite

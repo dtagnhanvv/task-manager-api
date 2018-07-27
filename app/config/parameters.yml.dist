@@ -2,7 +2,7 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     null
-    database_name:     biddy_api
+    database_name:     task_api
     database_user:     tagcadedev
     database_password: tagcadedev
 
